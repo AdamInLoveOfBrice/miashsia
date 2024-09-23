@@ -1,1 +1,104 @@
+	import lejos.hardware.lcd.GraphicsLCD;
+	import lejos.utility.Delay;
+	import lejos.hardware.Button;
+	
+	import lejos.hardware.motor.Motor;
+	import lejos.hardware.port.SensorPort;
+	import lejos.hardware.sensor.EV3TouchSensor;
+	import lejos.robotics.SampleProvider;
+	import lejos.robotics.filter.AbstractFilter;
+	
+	import lejos.hardware.Brick;
+	import lejos.hardware.BrickFinder;
+	import lejos.hardware.lcd.GraphicsLCD;
+	import lejos.utility.Delay;
+	import lejos.hardware.Button;
+	import lejos.hardware.motor.Motor;
+	import lejos.hardware.port.SensorPort;
+	import lejos.hardware.sensor.EV3TouchSensor;
+	import lejos.robotics.SampleProvider;
+	import lejos.robotics.filter.AbstractFilter;
+	import lejos.hardware.Brick;
+	import lejos.hardware.BrickFinder;
+	import lejos.hardware.motor.EV3LargeRegulatedMotor;
+	import lejos.hardware.port.MotorPort;
+	import lejos.robotics.chassis.Chassis;
+	import lejos.robotics.chassis.Wheel;
+	import lejos.robotics.chassis.WheeledChassis;
+	import lejos.robotics.navigation.MovePilot;
+	import lejos.utility.Delay;
+public class Test { 
+
+	/* Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}); 
+	  Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-7.2);
+   Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 43.2).offset(7.2);
+  */
+	/*	Wheel wheel1 = DifferentialChassis.modelWheel(Motor.A, 43.2).offset(-72);
+	 Wheel wheel2 = DifferentialChassis.modelWheel(Motor.D, 43.2).offset(72);
+	 Chassis chassis = new DifferentialChassis(new Wheel[]{wheel1, wheel2}); 
+	 MovePilot pilot = new MovePilot(chassis);
+	 pilot.setRobotSpeed(30);  // cm per second
+	 pilot.travel(50);         // cm
+	 pilot.rotate(-90);        // degree clockwise
+	 pilot.travel(-50,true);  //  move backward for 50 cm
+	 while(pilot.isMoving())Thread.yield();
+	 pilot.rotate(-90);
+	 pilot.rotateTo(270);
+	 pilot.stop();
+	   
+	
+/*	pilot.setRobotSpeed(30);  // cm per second
+   pilot.travel(50);         // cm
+   pilot.rotate(-90);    // degree clockwise
+   */
+   
+  /* private static EV3TouchSensor SENSOR1 = new EV3TouchSensor(SensorPort.S1);
+   EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+   	EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.B);
+   	EV3LargeRegulatedMotor bras = new EV3LargeRegulatedMotor(MotorPort.D);
+   	
+   	Chassis chassis = new WheeledChassis(new Wheel[] { roueGauche, roueDroite }, WheeledChassis.TYPE_DIFFERENTIAL);
+   	MovePilot pilot = new MovePilot(chassis);
+   	public int rotation = 0;
+   	public MovePilot getPilot() {
+   		return this.pilot;
+   	}
+   	public void rouler1() {
+   		rightMotor.startSynchronization();
+   		rightMotor.synchronizeWith(new EV3LargeRegulatedMotor[] {leftMotor});
+   		rightMotor.setSpeed(200);
+   		leftMotor.setSpeed(200);
+   		rightMotor.forward();
+   		leftMotor.forward();
+   		rightMotor.endSynchronization();
+   	}*/
+
+		
+	public static void main(String[] args) {
+	
+  
+   Delay.msDelay(2000); 
+  
+   Motor.A.forward();
+   //Motor.C.forward();
+   //Motor.D.forward();
+   Delay.msDelay(2000);
+   Motor.A.stop();
+   //Motor.C.stop();
+   //Motor.D.stop();   
+   Delay.msDelay(1000);
+   //Motor.C.backward();
+   //Motor.D.backward();
+   Delay.msDelay(1000);
+   //Motor.A.stop();
+   //Motor.C.stop();
+   //Motor.D.stop();
+   
+  
+   //rouler1();
+}
+	
+	
+	}
+
 
