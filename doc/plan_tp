@@ -1,5 +1,6 @@
 - déplacement aléatoire / parcours
 - capteur couleur / sensoriel / distance
+  - robotic testing -> find RGB values
   - détecter ligne blanche
   - différencier mur, palai et autre robot
 - ramasser palai
