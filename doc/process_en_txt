@@ -1,0 +1,16 @@
+Départ
+Avancer jusqu'au premier palai qui est au milieu du terrain
+Ouvrir les pinces
+Ramasser le palai
+Fermer les pinces 
+Avancer derrière la ligne adverse et le déposer 
+Demi Tour
+Aller au milieu du terrain
+Tour sur lui-même en détectant les discontinuité sur les distances
+Avancer vers une des discontinuités :
+  - Si aucun objet = Robot:
+   Répéter à partir de l'action 8
+  - Si distance à 0 = Mur : 
+    Répéter à partir de l'action 8
+  - Si distance disparait à partir de 0,3m = Palai :
+    Répéter à partir de l'action 8
