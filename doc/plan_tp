@@ -9,11 +9,12 @@
       if ( X< RGB value < Y) then uTurn; // Si couleur blanche = limite du terrain donc demi tour
 
   - detecter un mur :
-    if (distanceDetected) then avance(N) // Si signal métrique détecté
+    if (distanceDetected) then avance(N) // Si signal métrique détecté on avance
     if (distance < X)then uTurn // Si le signal métrique est toujours actif ça ne peut être qu'un mur, donc demi tour;
 
   - detecter un autre palai :
-
+    if (distanceDetected) then avance(N) // Si signal métrique détecté on avance
+    
   - detecter un autre robot :
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
