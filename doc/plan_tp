@@ -1,8 +1,23 @@
-- déplacement aléatoire / parcours
-- capteur couleur / sensoriel / distance
-  - robotic testing -> find RGB values
-  - détecter ligne blanche
-  - différencier mur, palai et autre robot
+- Se déplacer : 
+
+    forward, backward, turnLeft, turnRight, uTurn, lookRight, lookLeft
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- capteur couleur / sensoriel / distance : 
+
+  - détecter ligne blanche :
+      if ( X< RGB value < Y) then uTurn; // Si couleur blanche = limite du terrain donc demi tour
+
+  - detecter un mur :
+    if (distanceDetected) then avance(N) // Si signal métrique détecté
+    if (distance < X)then uTurn // Si le signal métrique est toujours actif ça ne peut être qu'un mur, donc demi tour;
+
+  - detecter un autre palai :
+
+  - detecter un autre robot :
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - ramasser palai
 - rapporter le palai
 - déposer le palai
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
