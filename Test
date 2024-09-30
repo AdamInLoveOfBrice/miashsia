@@ -30,8 +30,8 @@
 public class Test { 
 
 	/* Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}); 
-	  Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-7.2);
-   Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 43.2).offset(7.2);
+	Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-7.2);
+   	Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 43.2).offset(7.2);
   */
 	/*	Wheel wheel1 = DifferentialChassis.modelWheel(Motor.A, 43.2).offset(-72);
 	 Wheel wheel2 = DifferentialChassis.modelWheel(Motor.D, 43.2).offset(72);
