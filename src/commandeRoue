@@ -1,1 +1,43 @@
+package ia;
 
+import lejos.hardware.Brick;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.utility.Delay;
+
+public class Action {
+	
+	EV3LargeRegulatedMotor moteurG = new EV3LargeRegulatedMotor(MotorPort.D);
+	EV3LargeRegulatedMotor moteurD = new EV3LargeRegulatedMotor(MotorPort.C);
+	EV3LargeRegulatedMotor bras = new EV3LargeRegulatedMotor(MotorPort.A);
+	
+	public void avancer(int delay, int speed) {
+		moteurD.startSynchronization();
+		moteurD.synchronizeWith(new EV3LargeRegulatedMotor[] {moteurG});
+		moteurD.setSpeed(speed);
+		moteurG.setSpeed(speed);
+		moteurD.forward();
+		moteurG.forward();
+		Delay.msDelay(delay);
+		moteurD.stop();
+		moteurG.stop();
+		moteurD.endSynchronization(); 
+	}
+	public void reculer(int delay, int speed) {
+		moteurD.startSynchronization();
+		moteurD.synchronizeWith(new EV3LargeRegulatedMotor[] {moteurG});
+		moteurD.setSpeed(speed);
+		moteurG.setSpeed(speed);
+		moteurD.backward();
+		moteurG.backward();
+		Delay.msDelay(delay);
+		moteurD.stop();
+		moteurG.stop();
+		moteurD.endSynchronization(); 
+	}
+	}
