@@ -1,5 +1,16 @@
-Départ
-Avancer jusqu'au premier palai qui est au milieu du terrain
+Départ :
+- Départ soit au milieu soit à gauche soit à droite derrière la ligne blanche
+- Avancer jusqu'à dépasser la ligne blanche
+
+Avancer jusqu'au premier palai qui est au milieu du terrain:
+-------
+OOOOOOO
+OPOPOPO
+OPOPOPO
+OPOPOPO
+OOOOOOO
+-------
+
 Ouvrir les pinces
 Ramasser le palai
 Fermer les pinces 
