@@ -1,0 +1,38 @@
+package iapackage;
+
+import lejos.hardware.Button;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.SensorPort;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // Initialiser le robot avec les ports appropriés
+        Robot robot = new Robot(MotorPort.B, MotorPort.C, MotorPort.A, SensorPort.S4, SensorPort.S3, 1); // 1 représente le placement, ajustez si nécessaire
+
+        System.out.println("Prêt à avancer.");
+        Button.ENTER.waitForPressAndRelease(); // Attendre que l'utilisateur appuie sur Entrée pour commencer
+
+        // Avancer jusqu'au palet (1 mètre)
+        robot.forward(1000); // 1000 ms pour avancer d'environ 1 mètre, ajustez selon votre robot
+        System.out.println("Palet atteint.");
+
+        // Ouvrir les pinces pour ramasser le palet
+        robot.ouvrirPinces(true);
+        robot.catchTarget(200); // Peut être ajusté selon la distance et la méthode de détection
+        robot.fermerPinces(true);
+        System.out.println("Palet ramassé.");
+
+        // Retourner au point de départ
+        robot.backward(1000); // Retourner d'environ 1 mètre, ajustez selon votre robot
+        System.out.println("Retour au point de départ.");
+
+        // Ouvrir les pinces pour déposer le palet
+        robot.ouvrirPinces(false);
+        System.out.println("Palet déposé.");
+        
+        // Fin de la mission
+        System.out.println("Mission terminée.");
+        Button.ESCAPE.waitForPressAndRelease(); // Attendre que l'utilisateur appuie sur Échapper pour quitter
+    }
+}
