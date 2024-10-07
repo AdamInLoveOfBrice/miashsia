@@ -1,3 +1,6 @@
+Regle du jeu : https://lig-membres.imag.fr/PPerso/membres/pellier/doku.php?id=teaching:ia:project_lego
+
+
 Ultrasonic Sensor : https://ev3dev-lang-java.github.io/docs/support/fundamentals/sensors/ev3-us-sensor/index.html
 Laser Scanner : https://ev3dev-lang-java.github.io/docs/support/fundamentals/sensors/usb-lidar-rplidar/index.html
 Touch Sensor : https://ev3dev-lang-java.github.io/docs/support/fundamentals/sensors/ev3-touch-sensor/index.html
@@ -8,3 +11,4 @@ Color Sensor :  https://lejos.sourceforge.io/ev3/docs/lejos/hardware/sensor/EV3C
                
 Motors : https://ev3dev-lang-java.github.io/docs/support/fundamentals/actuators/regulated-motors.html
 MovePilot : https://lejos.sourceforge.io/ev3/docs/lejos/robotics/navigation/MovePilot.html
+
