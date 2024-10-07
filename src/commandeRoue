@@ -31,8 +31,8 @@ public class Action {
 	public void reculer(int delay, int vitesse) {
 		moteurD.startSynchronization();
 		moteurD.synchronizeWith(new EV3LargeRegulatedMotor[] {moteurG});
-		moteurD.setSpeed(speed);
-		moteurG.setSpeed(speed);
+		moteurD.setSpeed(vitesse);
+		moteurG.setSpeed(vitesse);
 		moteurD.backward();
 		moteurG.backward();
 		Delay.msDelay(delay);
