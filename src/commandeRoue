@@ -1,43 +1,75 @@
 package ia;
 
-import lejos.hardware.Brick;
-import lejos.hardware.BrickFinder;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
+import lejos.hardware.motor.Motor;
+import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.lcd.GraphicsLCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.TachoMotorPort;
+import lejos.robotics.Color;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Wheel;
+import lejos.utility.Delay;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.navigation.MovePilot.*;
 
 public class Action {
 	
-	EV3LargeRegulatedMotor moteurG = new EV3LargeRegulatedMotor(MotorPort.D);
-	EV3LargeRegulatedMotor moteurD = new EV3LargeRegulatedMotor(MotorPort.C);
-	EV3LargeRegulatedMotor bras = new EV3LargeRegulatedMotor(MotorPort.A);
+	private Wheel motorG ;
+	private Wheel motorD ; 
+	private Chassis chassis ; 
+	private MovePilot pilot ;
 	
-	public void avancer(int delay, int speed) {
-		moteurD.startSynchronization();
-		moteurD.synchronizeWith(new EV3LargeRegulatedMotor[] {moteurG});
-		moteurD.setSpeed(speed);
-		moteurG.setSpeed(speed);
-		moteurD.forward();
-		moteurG.forward();
-		Delay.msDelay(delay);
-		moteurD.stop();
-		moteurG.stop();
-		moteurD.endSynchronization(); 
+	public Action() {
+		this(MotorPort.D,MotorPort.C);
+	}
+	public Action(Port mG, Port mD) {
+		EV3LargeRegulatedMotor m1 = new EV3LargeRegulatedMotor(mG);
+		EV3LargeRegulatedMotor m2 = new EV3LargeRegulatedMotor(mD);
+		Wheel motorG = WheeledChassis.modelWheel(m1, 56).offset(-60);
+		Wheel motorD = WheeledChassis.modelWheel(m2, 56).offset(60);
+		chassis = new WheeledChassis(new Wheel[]{ motorG, motorD }, WheeledChassis.TYPE_DIFFERENTIAL);
+		pilot = new MovePilot(chassis);
+	}
+	
+	public void avancer() {
+		pilot.forward();
+	}
+	public void setVitesse(int v) {
+		pilot.setLinearSpeed(v);
+	}
+	public void avancer(double distance, int speed) {
+		pilot.setLinearSpeed(speed);
+		pilot.travel(distance);
+		pilot.stop(); 
+	}
+	public void reculer() {
+		pilot.backward();
 	}
 	public void reculer(int delay, int speed) {
-		moteurD.startSynchronization();
-		moteurD.synchronizeWith(new EV3LargeRegulatedMotor[] {moteurG});
-		moteurD.setSpeed(speed);
-		moteurG.setSpeed(speed);
-		moteurD.backward();
-		moteurG.backward();
+		pilot.setLinearSpeed(speed);
+		pilot.backward();
 		Delay.msDelay(delay);
-		moteurD.stop();
-		moteurG.stop();
-		moteurD.endSynchronization(); 
+		pilot.stop(); 
 	}
+	public void stop() {
+		pilot.stop();
 	}
+	public void tournerD(int angle) {
+		pilot.rotate(1.025*angle);
+	}
+	public void tournerG(int angle) {
+		pilot.rotate(-1*angle);
+	}
+}
