@@ -1,0 +1,33 @@
+1 - package Capteur : 
+
+  - Classe CapteurDistance :
+    // insérer méthodes de la classe CapteurDistance
+    
+  - Classe CapteurCouleur :
+    // insérer méthodes de la classe CapteurCouleur
+    - String couleur (int RGB value);
+    
+  - Classe CapteurContact : 
+    // insérer méthodes de la classe CapteurContact
+    - boolean contact();
+
+  - Classe CapteurUltrason : 
+   // insérer méthodes de la classe CapteurUltrason
+
+2 - package Moteur :
+
+  - Classe Pince :
+    // insérer méthodes de la classe Pince
+    void ouvrir();
+    void fermer();
+    
+  
+  - Classe Roue :
+    // insérer méthodes de la classe Roue
+    void avancer(int distance);
+    void reculer(int distance);
+    void tournerDroite(int degre);
+    void tournerGauche(int degre);
+
+3 - package Robot :
+    // insérer le fonctionnement du robot avec les packages précédent
