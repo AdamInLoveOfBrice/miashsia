@@ -49,6 +49,11 @@ public class Action {
 	public void setVitesse(int v) {
 		pilot.setLinearSpeed(v);
 	}
+
+	public void avancer(double distance) {
+		pilot.travel(distance);
+		pilot.stop(); 
+	}
 	public void avancer(double distance, int speed) {
 		pilot.setLinearSpeed(speed);
 		pilot.travel(distance);
