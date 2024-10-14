@@ -1,1 +1,38 @@
+// C'est le début restez branché !!!
+package capteur;
 
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.ev3.LocalEV3;
+import lejos.robotics.SampleProvider;
+
+public class UltrasonV2 {
+	private EV3UltrasonicSensor capteurDistance;
+	private SampleProvider distanceSampler;
+	private float[] sample;
+
+	public UltrasonV2 (Port port) {
+		capteurDistance = new EV3UltrasonicSensor(port);   // Initialisation du capteur
+		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
+		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
+	}
+	public SampleProvider getSample() {
+		return distanceSampler;
+	}
+	public float[] getsample () {
+		return sample;
+	}
+	public float getDistance() {
+        distanceSampler.fetchSample(sample, 0);  // Remplir le tableau sample avec les données du capteur
+        return sample[0];  // Retourner la première valeur, qui est la distance mesurée en mètres
+    }
+
+	 public void fermer() {
+	        capteurDistance.close();  // Libère les ressources associées au capteur
+	    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
