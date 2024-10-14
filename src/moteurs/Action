@@ -67,6 +67,11 @@ public class Action {
 		pilot.travel(-distance);
 		pilot.stop(); 
 	}
+
+	public void reculer(double distance) {
+		pilot.travel(-distance);
+		pilot.stop(); 
+	}
 	public void stop() {
 		pilot.stop();
 	}
