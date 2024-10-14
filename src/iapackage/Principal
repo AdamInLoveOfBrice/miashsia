@@ -64,10 +64,17 @@ public boolean recherchePalet() {// ne marche pas totalement
 	public void ramenerPalai() {
 		a.tournerD(180);
 		a.avancer (distance.fetchSample(sample,0);
+		while(
 	}
 
 	public static void main(String[] args) {
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
 		p.prendrePaletTouch();
+		int[] t = getValeurCouleur();
+		int r = t[0];
+		int g = t[1];
+		int b = t[2];
+		while (r>25 && g>25 && b>25){
+
 	}
 }
