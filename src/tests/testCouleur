@@ -19,7 +19,8 @@ public class main {
 		// TODO Auto-generated method stub
 		Action a = new Action();
 		Couleur c = new Couleur("S1");
-		
+
+	//faire avancer le robot jusqu'à ce qu'il detecte du blanc
 		a.avancer(100);
 		Color rgb = c.getCouleur();
 		while(c.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "BLANC") {
