@@ -63,7 +63,9 @@ public boolean recherchePalet() {// ne marche pas totalement
 	    	}
 	public void ramenerPalai() {
 		a.tournerD(180);
-		a.avancer (distance.fetchSample(sample,0);
+		if (sample[0]>300){
+			a.avancer(sample[0]);
+		}
 		int[] t = getValeurCouleur();
 		int r = t[0];
 		int g = t[1];
@@ -71,7 +73,7 @@ public boolean recherchePalet() {// ne marche pas totalement
 		while (a.nomCouleur(r,g,b!="BLANC"{
 			a.avancer()
 	}
-			a.avancer(500);
+			a.avancer(100);
 	}
 
 	public static void main(String[] args) {
