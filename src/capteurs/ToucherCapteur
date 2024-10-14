@@ -2,8 +2,8 @@ package capteurs;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3TouchSensor;
 
-public class toucherCapteur extends EV3TouchSensor {
-	public toucherCapteur(Port port) {
+public class ToucherCapteur extends EV3TouchSensor {
+	public ToucherCapteur(Port port) {
 		super(port);
 	}
 	
