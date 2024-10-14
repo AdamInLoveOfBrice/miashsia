@@ -30,14 +30,6 @@ public class Couleur {
 	public EV3ColorSensor getCouleur2() {
 		return capteurCouleur;
 	}
-	
-	public int[] getValeurCouleur() { // meme chose que getCouleur mais retourne un tableau des valeurs rvb de la couleur en question
-		tab = new float[capteurCouleur.sampleSize()];
-		capteurCouleur.fetchSample(tab, 0);
-		return new int [] {(int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255) // Lorsqu'il n'y a pas d'unité claire, un fournisseur d'échantillons utilise des valeurs normalisées comprises entre 0 et 1. et donc on fait x255 pour etre dans la norme rvb
-				
-		};
-		}
 			
 	public static String nomCouleur(int r, int g, int b) {
 		if((r<8 && g<8 && b<8)) {
