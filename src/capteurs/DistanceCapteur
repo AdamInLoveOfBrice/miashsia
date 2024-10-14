@@ -23,6 +23,7 @@ public class DistanceCapteur {
 	public float[] getSample () {
 		return sample;
 	}
+
 	public float getDistance() {
         setSample();  // Remplir le tableau sample avec les données du capteur
         return sample[0];  // Retourner la première valeur, qui est la distance mesurée en mètres
