@@ -61,7 +61,11 @@ public boolean recherchePalet() {// ne marche pas totalement
 	        	return true;
 
 	    	}
-	
+	public void ramenerPalai() {
+		a.tournerD(180);
+		a.avancer (distance.fetchSample(sample,0);
+	}
+
 	public static void main(String[] args) {
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
 		p.prendrePaletTouch();
