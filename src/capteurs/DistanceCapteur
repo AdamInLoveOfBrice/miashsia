@@ -16,10 +16,8 @@ public class DistanceCapteur {
 		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
 		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
 	}
-	public SampleProvider getSample() {
-		return distanceSampler;
-	}
-	public float[] getsample () {
+	
+	public float[] getSample () {
 		return sample;
 	}
 	public float getDistance() {
