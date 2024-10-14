@@ -46,6 +46,21 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
+
+public boolean recherchePalet() {// ne marche pas totalement 
+	        	// Met à jour l'échantillon actuel avec les données du capteur
+	    		List<Float> values = new ArrayList<>();
+	        	distance.fetchSample(sample, 0);
+	        	moteur.tourne();
+	        	// Boucle jusqu'à ce qu'un objet soit détecté à une distance inférieure à la portée spécifiée
+	        	while (moteur.isMoving()) {
+	            	distance.fetchSample(sample, 0);// Reprend une nouvelle mesure avec le capteur ultrasonique
+	        	}
+	      	 System.out.print(sample);
+	        	// Retourne true quand un objet est détecté à moins de "range" mètres
+	        	return true;
+
+	    	}
 	
 	public static void main(String[] args) {
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
