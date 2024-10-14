@@ -1,1 +1,41 @@
+package iapackage;
 
+import moteurs.Action;
+import moteurs.Pince;
+import capteurs.ToucherCapteur;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.utility.Delay;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.lcd.GraphicsLCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.TachoMotorPort;
+import lejos.robotics.Color;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Wheel;
+import lejos.utility.Delay;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.navigation.MovePilot.*;
+
+public class Principal {
+	private static Action a;
+	private static ToucherCapteur touch;
+	private static Pince pince;
+	public Principal(Action action,Pince pince, ToucherCapteur t) {
+		a=action;this.pince=pince;touch=t;
+	}
+	public static void main(String[] args) {
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
+	}
+}
