@@ -68,7 +68,7 @@ public boolean recherchePalet() {// ne marche pas totalement
 		int r = t[0];
 		int g = t[1];
 		int b = t[2];
-		while (r>25 && g>25 && b>25){
+		while (a.nomCouleur(r,g,b!="BLANC"{
 			a.avancer()
 	}
 			a.avancer(500);
