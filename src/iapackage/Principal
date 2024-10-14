@@ -35,21 +35,20 @@ public class Principal {
 	public Principal(Action action,Pince pince, ToucherCapteur t) {
 		a=action;this.pince=pince;touch=t;
 	}
-	public void prendrePaletTouch() { //celui là ne marche pas pour l'instant
+	public void prendrePaletTouch() {
 		pince.ouvrir();
 		a.setVitesse(200);
-		while(touch.n==0) {
-			System.out.println(touch.n);
-			a.avancer();
+		a.avancer();
+		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
 		}
-		System.out.println(touch.n);
 		a.stop();
 		pince.fermer();
-		a.avancer(10);
+		a.tournerG(180);
+		a.avancer(200);
 	}
 	
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S4));
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
 		p.prendrePaletTouch();
 	}
 }
