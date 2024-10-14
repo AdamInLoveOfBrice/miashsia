@@ -1,4 +1,4 @@
-package ia;
+package moteurs;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.Motor;
@@ -26,7 +26,7 @@ import lejos.robotics.navigation.MovePilot.*;
 
 public class Action {
 	
-	private Wheel motorG ;
+	private Wheel motorG ; //bah si, ligne 42
 	private Wheel motorD ; 
 	private Chassis chassis ; 
 	private MovePilot pilot ;
@@ -57,10 +57,9 @@ public class Action {
 	public void reculer() {
 		pilot.backward();
 	}
-	public void reculer(int delay, int speed) {
+	public void reculer(double distance, int speed) {
 		pilot.setLinearSpeed(speed);
-		pilot.backward();
-		Delay.msDelay(delay);
+		pilot.travel(-distance);
 		pilot.stop(); 
 	}
 	public void stop() {
@@ -70,6 +69,6 @@ public class Action {
 		pilot.rotate(1.025*angle);
 	}
 	public void tournerG(int angle) {
-		pilot.rotate(-1*angle);
+		pilot.rotate(-1.025*angle);
 	}
 }
