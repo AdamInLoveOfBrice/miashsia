@@ -24,7 +24,7 @@ public class DistanceCapteur {
 		return sample;
 	}
 	public float getDistance() {
-        distanceSampler.fetchSample(sample, 0);  // Remplir le tableau sample avec les données du capteur
+        setSample();  // Remplir le tableau sample avec les données du capteur
         return sample[0];  // Retourner la première valeur, qui est la distance mesurée en mètres
     }
 
