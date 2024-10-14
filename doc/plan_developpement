@@ -29,5 +29,5 @@
     void tournerDroite(int degre);
     void tournerGauche(int degre);
 
-3 - package Robot :
+3 - package IApackage :
     // insérer le fonctionnement du robot avec les packages précédent
