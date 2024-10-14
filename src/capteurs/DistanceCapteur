@@ -6,12 +6,12 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.robotics.SampleProvider;
 
-public class UltrasonV2 {
+public class DistanceCapteur {
 	private EV3UltrasonicSensor capteurDistance;
 	private SampleProvider distanceSampler;
 	private float[] sample;
 
-	public UltrasonV2 (Port port) {
+	public DistanceCapteur (Port port) {
 		capteurDistance = new EV3UltrasonicSensor(port);   // Initialisation du capteur
 		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
 		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
