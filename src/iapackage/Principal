@@ -69,8 +69,9 @@ public boolean recherchePalet() {// ne marche pas totalement
 		int g = t[1];
 		int b = t[2];
 		while (r>25 && g>25 && b>25){
-
+			a.avancer()
 	}
+			a.avancer(500);
 	}
 
 	public static void main(String[] args) {
