@@ -1,1 +1,16 @@
+private RegulatedMotor pinces;
+	
+	public Pince(Port pincesPort) {
+		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
+		pinces.setSpeed((int) pinces.getMaxSpeed());
+	}
+ 
 
+	public void fermer(boolean t){
+		pinces.rotate(-3*330,t);
+	}
+
+	public void ouvrir(boolean t) {
+		pinces.rotate(3*330,t);
+	}
+}
