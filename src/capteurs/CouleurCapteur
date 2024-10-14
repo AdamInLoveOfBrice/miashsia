@@ -27,9 +27,6 @@ public class Couleur {
 		return new Color((int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255)); // retourne la couleur associé au code rvb
 		
 	}
-	public EV3ColorSensor getCouleur2() {
-		return capteurCouleur;
-	}
 			
 	public static String nomCouleur(int r, int g, int b) {
 		if((r<8 && g<8 && b<8)) {
