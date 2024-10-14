@@ -17,14 +17,15 @@ public class Pince {
 	}
  
 	
-	public void fermer(boolean t){
-		pinces.rotate(-3*330,t);
+	public void fermer(){
+		pinces.rotate(-3*330);
 	}
 
 	
-	public void ouvrir(boolean t) {
-		this.pinces.rotate(3*330,t);
+	public void ouvrir() {
+		pinces.rotate(3*330);
 	}
 }
+
 
 
