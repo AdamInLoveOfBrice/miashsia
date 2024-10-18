@@ -81,6 +81,9 @@ public class Action {
 	public void tournerG(int angle) {
 		pilot.rotate(-1.025*angle);
 	}
+public boolean isMoving() {
+		return pilot.isMoving();
+	}
 public void tourne() { //36 no scop par la droite
 		pilot.rotate(360*1.29, true);
 	}
