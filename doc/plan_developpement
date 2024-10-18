@@ -1,3 +1,6 @@
+
+1) Plan des classes
+
 1 - package Capteur : 
 
   - Classe CapteurDistance :
@@ -31,3 +34,9 @@
 
 3 - package IApackage :
     // insérer le fonctionnement du robot avec les packages précédent
+
+
+2) Stratégie globale
+
+A l'execution, notre robot se rend au milieu du plateau, execute un toursur lui même pour rechercher le palet le plus proche de lui puis se dirige vers lui jusqu'à pouvoir le ramasser pour ensuite le déposer dans notre camp.
+
