@@ -16,7 +16,7 @@ public class Pince {
 	}
 	
 	public void fermer(){
-		pinces.rotate(-3*330);
+		pinces.rotate(-1000);
 	}
 	
 	public void fermer(int angle){
@@ -24,7 +24,7 @@ public class Pince {
 	}
 	
 	public void ouvrir() {
-		this.pinces.rotate(3*330);
+		this.pinces.rotate(1000);
 	}
 	
 	public void ouvrir(int angle){
