@@ -1,42 +1,55 @@
+1. Introduction
 
-1) Plan des classes
+Par groupe de 5, nous devons programmer un robot EV3 en langage Java pour que lors de l'épreuve, ce dernier ramasse des palets les uns après les autres et les ramène au fur et à mesure dans notre camp. 
+Cette épreuve se déroule dans un espace restreint, en compétition avec un autre robot placé sur le même plateau de jeu. Ce plateau contient 9 palets, chacun placé à une intersection de deux lignes de couleurs et notre but est de marquer plus de points que notre adversaire en sachant que le calcul des scores s’effectue comme suit :
+3 points pour chaque palet placé dans la zone d’en-but adverse,
+5 points de bonus pour l’équipe ayant marqué en premier,
+2 points pour le robot ayant un palet en sa possession a la fin de la manche.
 
-1 - package Capteur : 
+
+
+2. Spécifications fonctionnelles
+
+Au lancement de l’épreuve, notre robot ramasse le palet situé en face de lui (ouverture des pinces, avance jusqu’à la pression du capteur de toucher à l’avant du robot, puis referme les pinces), et se dirige vers le camp adverse pour le déposer (se décale vers la droite de 45°, avance de 25 cm, tourne vers la gauche de 45° puis avance jusqu’à la ligne blanche du camp adverse).
+Pour détecter un palet, notre robot recherchera le palet le plus proche de lui en effectuant un tour sur lui-même. Lors de ce tour, notre robot est capable de différencier un mur (données continu dans notre tableau de valeur de distance), un robot adverse (...) et un palet(...) pour conserver uniquement l’emplacement du palet.
+Ensuite, le robot se déplace en direction du palet observer, l’attrape et le ramène dans le camp adverse (s’oriente grâce à notre boussole en direction du camp adverse puis s’y rend).
+
+
+3. Spécifications techniques
+
+Pour développer notre projet nous utilisons l’application Eclipse pour programmer en langage Java, l’outil GitHub pour centraliser notre projet et  apporter chacune des modifications à notre code et la bibliothèque numérique en ligne de LeJos pour obtenir les différentes informations pratique en lien avec notre robot EV3.
+Notre projet Java s’articule de la manière suivante :
+
+1 - package Capteur :
 
   - Classe CapteurDistance :
-    // insérer méthodes de la classe CapteurDistance
-    
-  - Classe CapteurCouleur :
-    // insérer méthodes de la classe CapteurCouleur
-    - String couleur (int RGB value);
-    
-  - Classe CapteurContact : 
-    // insérer méthodes de la classe CapteurContact
-    - boolean contact();
+	// insérer méthodes de la classe CapteurDistance
 
-  - Classe CapteurUltrason : 
+  - Classe CapteurCouleur :
+	// insérer méthodes de la classe CapteurCouleur
+	- String couleur (int RGB value);
+    
+  - Classe CapteurContact :
+	// insérer méthodes de la classe CapteurContact
+	- boolean contact();
+
+  - Classe CapteurUltrason :
    // insérer méthodes de la classe CapteurUltrason
 
 2 - package Moteur :
 
   - Classe Pince :
-    // insérer méthodes de la classe Pince
-    void ouvrir();
-    void fermer();
+	// insérer méthodes de la classe Pince
+	void ouvrir();
+	void fermer();
     
-  
+ 
   - Classe Roue :
-    // insérer méthodes de la classe Roue
-    void avancer(int distance);
-    void reculer(int distance);
-    void tournerDroite(int degre);
-    void tournerGauche(int degre);
+	// insérer méthodes de la classe Roue
+	void avancer(int distance);
+	void reculer(int distance);
+	void tournerDroite(int degre);
+	void tournerGauche(int degre);
 
 3 - package IApackage :
-    // insérer le fonctionnement du robot avec les packages précédent
-
-
-2) Stratégie globale
-
-A l'execution, notre robot se rend au milieu du plateau, execute un toursur lui même pour rechercher le palet le plus proche de lui puis se dirige vers lui jusqu'à pouvoir le ramasser pour ensuite le déposer dans notre camp.
-
+	// insérer le fonctionnement du robot avec les packages précédent
