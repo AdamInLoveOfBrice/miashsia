@@ -34,11 +34,17 @@ public class Principal {
 	private static ToucherCapteur touch;
 	private static Pince pince;
 	private static DistanceCapteur distance;
+	private int angle;
 	
 	public Principal(Action action,Pince pince, ToucherCapteur t, DistanceCapteur d) {
-		a=action;this.pince=pince;touch=t;distance=d;
+		a=action;this.pince=pince;touch=t;distance=d;this.angle=0;
 	}
-	
+
+	public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
+			int ang= angle%360;
+			a.tournerG(ang);
+		}
+
 	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
 		pince.ouvrir();
 		a.setVitesse(200);
@@ -47,13 +53,15 @@ public class Principal {
 		}
 		a.stop();
 		pince.fermer();
-		a.tournerG(180);
+		a.tournerD(180);
+		angle+=180;
 		a.avancer(200);
 	}
 	
 	public void recherche() {
 		float[] sample = new float[0];
-		a.tournerG(360);
+		a.tournerD(360);
+		angle+=360;
 		while(a.isMoving()) {
 			sample=distance.recherche(sample);
 		}
