@@ -36,6 +36,7 @@ public class Principal {
 	private static ToucherCapteur touch;
 	private static Pince pince;
 	private static DistanceCapteur distance;
+	private int angle;
 	
 	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d) {
 		a=action;
