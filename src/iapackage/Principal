@@ -36,9 +36,9 @@ public class Principal {
 	private static ToucherCapteur touch;
 	private static Pince pince;
 	private static DistanceCapteur distance;
-	private static CapteurCouleur color;
+	private static CouleurCapteur color;
  	
-	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CapteurCouleur c) {
+	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
 		this.a=action;
 		this.pince=pince;
 		this.touch=t;
@@ -127,7 +127,7 @@ public class Principal {
 	}
 
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4),new CapteurCouleur(SensorPort.S1));
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4),new CouleurCapteur(SensorPort.S1));
 		p.recherche();
 		p.avancerPlusPrendrePalet();
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
