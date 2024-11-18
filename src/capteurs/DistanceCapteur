@@ -6,13 +6,18 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.robotics.SampleProvider;
 
-public class DistanceCapteur extends EV3UltrasonicSensor {
+public class DistanceCapteur {
 	private EV3UltrasonicSensor capteurDistance;
 	private SampleProvider distanceSampler;
 	private float[] sample;
-
+	
+	public DistanceCapteur () {
+		capteurDistance = new EV3UltrasonicSensor(LocalEV3.get().getPort("S4"));   // Initialisation du capteur
+		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
+		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
+	}
+	
 	public DistanceCapteur (Port port) {
-		super(port);
 		capteurDistance = new EV3UltrasonicSensor(port);   // Initialisation du capteur
 		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
 		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
@@ -20,7 +25,7 @@ public class DistanceCapteur extends EV3UltrasonicSensor {
 	
 	public float[] recherche(float[] tab) {
 		tab = Arrays.copyOf(tab, tab.length + 1);
-		tab[tab.length]=getDistance();//(float)(Math.random()*70)+30;//nombre aléatoire de 30 à 100 pour un test
+		tab[tab.length-1]=getDistance();//(float)(Math.random()*70)+30;//nombre aléatoire de 30 à 100 pour un test
 		return tab;
 	}
 	
@@ -39,5 +44,8 @@ public class DistanceCapteur extends EV3UltrasonicSensor {
 
 	 public void fermer() {
 	        capteurDistance.close();  // Libère les ressources associées au capteur
+	   }
+	 public void ouvrir() {
+	        capteurDistance.enable();  // Libère les ressources associées au capteur
 	   }
 }
