@@ -120,7 +120,18 @@ public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage bas
 		//System.out.println("début : " + tab[index1] + " , fin : " + tab[index2] );
 		return t;
 	}
-	
+
+	public void eviterRobot() {
+		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
+			float distanceProvisoire=distance.getDistance();
+			Delay.msDelay(100);
+			if(distance.getDistance()<distanceProvisoire-5)
+			a.tournerD(100);
+			a.avancer(150,100);
+			a.tournerG(100);
+		}
+	}
+
 	public static void main(String[] args) {
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur());
 		p.recherche();
