@@ -55,6 +55,12 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
+
+public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
+				int ang= angle%360;
+				a.tournerG(ang);
+			}
+			
 	
 	public void recherche() {
 		distance.ouvrir();
