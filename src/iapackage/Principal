@@ -36,13 +36,14 @@ public class Principal {
 	private static ToucherCapteur touch;
 	private static Pince pince;
 	private static DistanceCapteur distance;
-	private int angle;
-	
-	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d) {
-		a=action;
+	private static CouleurCapteur color;
+ 	
+	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
+		this.a=action;
 		this.pince=pince;
-		touch=t;
-		distance=d;
+		this.touch=t;
+		this.distance=d;
+		this.color=c;
 	}
 	
 	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
@@ -56,12 +57,6 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
-
-public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
-				int ang= angle%360;
-				a.tournerG(ang);
-			}
-			
 	
 	public void recherche() {
 		distance.ouvrir();
@@ -87,15 +82,15 @@ public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage bas
 		System.out.println(angleMin);
 
 		a.tournerG(angleMin);
-		/*pince.ouvrir();
+		pince.ouvrir();
 		a.avancer(100);
 		while(!(touch.estTouche())){
 		}
 		a.stop();
 		pince.fermer();
 		a.tournerD(180);
-		a.avancer(300, 100);*/
-	//TODO impémenter l'angle pour la "boussole"
+		a.avancer(300, 100);
+	//TODO implémenter l'angle pour la "boussole"
 	}
 	
 	public static float[] min(float[] tab) {
@@ -117,10 +112,9 @@ public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage bas
 		float[] t = new float[] {min, indexMin, index1, index2};
 		System.out.println("Minimum :" + Arrays.toString(t));
 		System.out.println(tab.length);
-		//System.out.println("début : " + tab[index1] + " , fin : " + tab[index2] );
 		return t;
 	}
-
+	
 	public void eviterRobot() {
 		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
 			float distanceProvisoire=distance.getDistance();
@@ -133,7 +127,11 @@ public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage bas
 	}
 
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur());
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(),new CouleurCapteur(SensorPort.S1));
 		p.recherche();
+		p.avancerPlusPrendrePalet();
+		while(color.nomCouleur(color.getCouleur())!="BLANC")
+		p.eviterRobot();
+		
 	}
 }
