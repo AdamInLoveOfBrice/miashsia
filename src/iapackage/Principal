@@ -64,21 +64,21 @@ public void recherche2() {
 		System.out.println(min);
 		while(a.isMoving()) {
 			tab=distance.recherche(tab);
-			int j=0;
-			int t=0;
+			int debut=0;
+			int fin=0;
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.05<min){
-				j=tab.length-1;
-				System.out.println("index debut = " + j + " , valeur = " +tab[j]);
+				debut=tab.length-1;
+				System.out.println("index debut = " + debut + " , valeur = " +tab[tab.length-1]);
 			}
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
 				min=tab[tab.length-1];
 			}if((tab.length>1) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
-				t=tab.length-1;
-				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
-				System.out.println(t-j);
-				if ((t-j)<300) {
-					a.stop();
-					a.tournerD(30);
+				fin=tab.length-1;
+				System.out.println("index fin = " + fin + " , valeur = " +tab[tab.length-1]);
+				System.out.println(fin-debut);
+				if ((fin-debut)<300) { //est un nombre qui peut etre ajusté en fonction du nombre de valeur que renvoie la detection d'un palet (pour etre sur que ce n'est pas un mur ou un  robot)
+					a.stop(); //on s'arrete quand le palet n'est plus dans notre vision
+					a.tournerD(30); //on se recalibre devant le palet
 				}
 			}
 			
