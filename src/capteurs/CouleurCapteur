@@ -1,4 +1,4 @@
-package ia;
+package capteurs;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
@@ -11,8 +11,8 @@ public class CouleurCapteur {
 	private static EV3ColorSensor capteurCouleur;
 	public static float[] tab; // tableau d'echantillions de couleur
 	
-	public CouleurCapteur(String port) {
-		portCouleur = LocalEV3.get().getPort(port);//Renvoie un objet port pour le nom du port demandé. Cela permet d'accéder au matériel associé au port spécifié.
+	public CouleurCapteur(Port port) {
+		portCouleur = port;//Renvoie un objet port pour le nom du port demandé. Cela permet d'accéder au matériel associé au port spécifié.
 		capteurCouleur = new EV3ColorSensor(portCouleur); // relie l'instance crée a l'objet
 		capteurCouleur.setFloodlight(Color.WHITE); //Permet d'allumer ou d'éteindre le projecteur par couleur. Si le capteur possède plusieurs couleurs de lumière, vous pouvez contrôler la couleur qui est allumée ou éteinte. Si la couleur n'existe pas, elle ne fait rien et renvoie false. Vous pouvez éteindre le projecteur en utilisant Color.NONE.
 		capteurCouleur.setCurrentMode("RGB"); //Définit le mode actuel de récupération des échantillons dans notre cas ce sera ROuge vert bleu
@@ -52,4 +52,3 @@ public class CouleurCapteur {
 		}
 	}
 }
-
