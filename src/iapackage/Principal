@@ -57,6 +57,36 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
+public void recherche2() {
+		float[] tab = new float[0];
+		a.asyncTournerG((double)360);
+		float min = (float)0.55;
+		System.out.println(min);
+		while(a.isMoving()) {
+			tab=distance.recherche(tab);
+			int j=0;
+			int t=0;
+			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.05<min){
+				j=tab.length-1;
+				System.out.println("index debut = " + j + " , valeur = " +tab[j]);
+			}
+			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
+				min=tab[tab.length-1];
+			}if((tab.length>1) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
+				t=tab.length-1;
+				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
+				System.out.println(t-j);
+				if ((t-j)<300) {
+					a.stop();
+					a.tournerD(30);
+				}
+			}
+			
+		}
+
+		//System.out.println(Arrays.toString(tab));
+		System.out.println(tab.length);
+	}
 	
 	public void recherche() {
 		distance.ouvrir();
