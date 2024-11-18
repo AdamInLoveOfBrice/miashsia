@@ -8,26 +8,35 @@ import lejos.hardware.port.Port;
 import lejos.robotics.RegulatedMotor;
 
 public class Pince {
-	
+
 	private RegulatedMotor pinces;
-	
+	int angle=0;
+
 	public Pince(Port pincesPort) {
 		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
+		angle=0;
 	}
-	
+
 	public void fermer(){
-		pinces.rotate(-1000);
+		pinces.rotate(-3*330);
+		this.angle=this.angle-3*330;
 	}
-	
+
 	public void fermer(int angle){
 		pinces.rotate(-angle);
+		this.angle=this.angle-angle;
 	}
-	
+
 	public void ouvrir() {
-		this.pinces.rotate(1000);
+		this.pinces.rotate(3*330);
+		this.angle=this.angle+3*330;
 	}
-	
+
 	public void ouvrir(int angle){
 		pinces.rotate(angle);
+		this.angle=this.angle+angle;
+	}
+	public boolean estFermée() {
+		return (this.angle==3*330);
 	}
 }
