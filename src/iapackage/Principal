@@ -1,8 +1,9 @@
 package iapackage;
 
-import moteurs.Action;
-import moteurs.Pince;
-import capteurs.ToucherCapteur;
+import moteurs.*;
+import java.util.Arrays;
+
+import capteurs.*;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.RegulatedMotor;
@@ -27,15 +28,23 @@ import lejos.robotics.chassis.Wheel;
 import lejos.utility.Delay;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.navigation.MovePilot.*;
+import lejos.robotics.SampleProvider;
+
 
 public class Principal {
 	private static Action a;
 	private static ToucherCapteur touch;
 	private static Pince pince;
-	public Principal(Action action,Pince pince, ToucherCapteur t) {
-		a=action;this.pince=pince;touch=t;
+	private static DistanceCapteur distance;
+	
+	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d) {
+		a=action;
+		this.pince=pince;
+		touch=t;
+		distance=d;
 	}
-	public void prendrePaletTouch() {
+	
+	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
 		pince.ouvrir();
 		a.setVitesse(200);
 		a.avancer();
@@ -46,37 +55,82 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
-
-public boolean recherchePalet() {// ne marche pas totalement 
-	        	// Met à jour l'échantillon actuel avec les données du capteur
-	    		List<Float> values = new ArrayList<>();
-	        	distance.fetchSample(sample, 0);
-	        	moteur.tourne();
-	        	// Boucle jusqu'à ce qu'un objet soit détecté à une distance inférieure à la portée spécifiée
-	        	while (moteur.isMoving()) {
-	            	distance.fetchSample(sample, 0);// Reprend une nouvelle mesure avec le capteur ultrasonique
-	        	}
-	      	 System.out.print(sample);
-	        	// Retourne true quand un objet est détecté à moins de "range" mètres
-	        	return true;
-
-	    	}
-	public void ramenerPalai() {
-		a.tournerD(180);
-		if (sample[0]>300){
-			a.avancer(sample[0]);
+	
+	public void recherche() {
+		distance.ouvrir();
+		Delay.msDelay(200);
+		float[] sample = new float[0];
+		int i = 0;
+		a.asyncTournerG((double)360);
+		while(a.isMoving()) {
+			sample=distance.recherche(sample);
+			i++;
 		}
-		int[] t = getValeurCouleur();
-		int r = t[0];
-		int g = t[1];
-		int b = t[2];
-		while (a.nomCouleur(r,g,b!="BLANC"{
-			a.avancer()
+		System.out.println(sample.length);
+		//float[] x = Arrays.copyOf(sample,sample.length);
+		float[] min = min(sample);
+		//Arrays.sort(x);
+		//System.out.println(Arrays.toString(sample));
+		//System.out.println(Arrays.toString(min));
+		//int b =0;
+		//for(int i=0;i<x.length;i++) {
+			//if(x[i]==0.0) {
+				//b++;
+			//}
+		//}
+		//x = Arrays.copyOfRange(x,b,x.length-1);
+		//System.out.println(x[0]);
+		System.out.println(min[0]);
+		//System.out.println(Arrays.toString(x));
+		//System.out.println(b+x.length-1);
+		/*int index = 0;
+		for(int i = 0; i<sample.length;i++) {
+			if(sample[i]==x[0]) {
+				index=i;
+				break;
+			}
+		}*/
+		double angleMin = 360.0 *((min[2]+min[3])/2)*1.4 / i; //le *1.4 est un coefficient estimé qui corrige l'angle 
+		System.out.println(angleMin);
+		//System.out.println(index);
+		//int ang=360*index/(b+x.length-1);
+		a.tournerG(angleMin);
+		pince.ouvrir();
+		a.avancer(100);
+		while(!(touch.estTouche())){
+		}
+		a.stop();
+		pince.fermer();
+		a.tournerD(180);
+		a.avancer(300, 100);
+	//TODO impémenter l'angle pour la "boussole"
 	}
-			a.avancer(100);
+	
+	public static float[] min(float[] tab) {
+		float min = tab[0];
+		int indexMin = 0;
+		int index1 = 0, index2 = 0;
+		for(int i=1;i<tab.length;i++) {
+			if(tab[i]!=0 && tab[i]+0.05<min){
+				index1 = i;
+			}
+			if(tab[i]!=0 && tab[i]<min) {
+				min=tab[i];
+				indexMin=i;
+			}if( (tab[i]!=0) && (tab[i-1]-0.05<min) && (tab[i]-0.05>min) ){
+				index2 = i;
+			}
+			
+		}
+		float[] t = new float[] {min, indexMin, index1, index2};
+		System.out.println("Minimum :" + Arrays.toString(t));
+		System.out.println(tab.length);
+		//System.out.println("début : " + tab[index1] + " , fin : " + tab[index2] );
+		return t;
 	}
-
+	
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3));
-		p.prendrePaletTouch();
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur());
+		p.recherche();
+	}
 }
