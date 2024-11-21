@@ -45,7 +45,11 @@ public class Principal {
 		this.distance=d;
 		this.color=c;
 	}
-	
+
+	public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
+				int ang= angle%360;
+				a.tournerG(ang);
+			}
 	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
 		pince.ouvrir();
 		a.setVitesse(200);
