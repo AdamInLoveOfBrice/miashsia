@@ -61,6 +61,21 @@ public class Principal {
 		a.tournerG(180);
 		a.avancer(200);
 	}
+
+	public void prendrePremierPalet() {
+		a.setVitesse(350);
+		avancerPlusPrendrePalet();
+		a.tournerD(45);
+		a.avancer(450);
+		a.tournerG(45);
+		a.avancer();
+		while(color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+		}
+		a.stop();
+	}
+
+
 public void recherche2() {
 		float[] tab = new float[0];
 		a.asyncTournerG((double)360);
