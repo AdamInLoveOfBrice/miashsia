@@ -198,7 +198,7 @@ public void recherche2() {
 		a.tournerD(180);
 		
 	}
-	public void PlacementApresDebut(){
+	public void placementApresDebut(){
 		if (position == 1) {
 			a.tournerD(90);
 			a.avancer(250);
@@ -231,7 +231,8 @@ public void recherche2() {
 			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
 			p.grateurDePalet();
 		}
-		p.PlacementApresDebut();p.recherche();
+		p.placementApresDebut();
+		p.recherche();
 		p.avancerPlusPrendrePalet();
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
 			p.eviterRobot();
