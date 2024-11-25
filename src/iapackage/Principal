@@ -73,6 +73,9 @@ public class Principal {
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
 			eviterRobot();
 		}
+		a.tournerG(45);
+        	a.avancerAsync(500);
+        	a.tournerD(45);
 		a.stop();
 	}
 
