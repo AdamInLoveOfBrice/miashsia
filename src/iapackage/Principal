@@ -37,6 +37,7 @@ public class Principal {
 	private static Pince pince;
 	private static DistanceCapteur distance;
 	private static CouleurCapteur color;
+	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite;
  	
 	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
 		this.a=action;
@@ -44,6 +45,12 @@ public class Principal {
 		this.touch=t;
 		this.distance=d;
 		this.color=c;
+	}
+	public void setPosition(int p) {
+		position=p;
+	}
+	public int getPosition() {
+		return position;
 	}
 
 	public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
@@ -178,10 +185,53 @@ public void recherche2() {
 			a.tournerG(100);
 		}
 	}
+	public void grateurDePalet() {
+		a.tournerD(180);
+		avancerPlusPrendrePalet(180);
+		a.tournerD(180);
+		a.avancer(600,3000);
+		pince.ouvrir();
+		avancerPlusPrendrePalet(180);
+		a.tournerD(180);
+		a.avancer(1200,3000);
+		pince.ouvrir();
+		a.tournerD(180);
+		
+	}
+	public void PlacementApresDebut(){
+		if (position == 1) {
+			a.tournerD(90);
+			a.avancer(250);
+			a.tournerG(90);
+			a.avancer(900);
+		}
+		if (position == 2) {
+			a.avancer(900);
+		}
+		else {
+			a.tournerG(90);
+			a.avancer(250);
+			a.tournerD(90);
+			a.avancer(900);
+		}
+	}
 
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4),new CouleurCapteur(SensorPort.S1));
-		p.recherche();
+		String EstCeQueYaQuelquUn = "Ya Personne";
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new Couleur(SensorPort.S1), 1);
+		p.setPosition(1); // rentrer la position en début d'epreuve
+		p.avancerPlusPrendrePalet(3000);
+		if (EstCeQueYaQuelquUn == "Ya Personne") {
+			p.grateurDePalet();
+		}
+		else {
+			a.tournerD(90);
+			a.avancer(500);
+			a.tournerG(90);
+			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
+			p.grateurDePalet();
+		}
+		p.PlacementApresDebut();p.recherche();
 		p.avancerPlusPrendrePalet();
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
 			p.eviterRobot();
