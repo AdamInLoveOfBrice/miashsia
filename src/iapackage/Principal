@@ -185,7 +185,7 @@ public void recherche2() {
 			a.tournerG(100);
 		}
 	}
-	public void grateurDePalet() {
+	public void ramenerDeuxPalets() {
 		a.tournerD(180);
 		avancerPlusPrendrePalet(180);
 		a.tournerD(180);
@@ -222,14 +222,14 @@ public void recherche2() {
 		p.setPosition(1); // rentrer la position en début d'epreuve
 		p.avancerPlusPrendrePalet(3000);
 		if (EstCeQueYaQuelquUn == "Ya Personne") {
-			p.grateurDePalet();
+			p.ramenerDeuxPalets();
 		}
 		else {
 			a.tournerD(90);
 			a.avancer(500);
 			a.tournerG(90);
 			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
-			p.grateurDePalet();
+			p.ramenerDeuxPalets();
 		}
 		p.placementApresDebut();
 		p.recherche();
