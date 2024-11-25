@@ -1,4 +1,4 @@
-package moteurs;
+package Moteur;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
@@ -11,15 +11,16 @@ public class Pince {
 
 	private RegulatedMotor pinces;
 	int angle=0;
-
+int a=1200;
 	public Pince(Port pincesPort) {
 		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
 		angle=0;
+		
 	}
 
 	public void fermer(){
-		pinces.rotate(-3*330);
-		this.angle=this.angle-3*330;
+		pinces.rotate(a);
+		this.angle=this.angle-a;
 	}
 
 	public void fermer(int angle){
@@ -28,8 +29,8 @@ public class Pince {
 	}
 
 	public void ouvrir() {
-		this.pinces.rotate(3*330);
-		this.angle=this.angle+3*330;
+		this.pinces.rotate(a);
+		this.angle=this.angle+a;
 	}
 
 	public void ouvrir(int angle){
@@ -37,6 +38,6 @@ public class Pince {
 		this.angle=this.angle+angle;
 	}
 	public boolean estFermée() {
-		return (this.angle==3*330);
+		return (this.angle==a);
 	}
 }
