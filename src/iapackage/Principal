@@ -57,14 +57,25 @@ public class Principal {
 		return position;
 	}
 
-	public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
-				int ang= angle%360;
-				this.angle=0;
-				a.tournerG(ang);
-			}
+	public void recalibrage() {
+		int ang= angle%360;
+		this.angle=0;
+		a.tournerG(ang);
+	}
 
-	public void avancerPlusPrendrePalet(int vitesse) {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
-		if(pince.estFermée())
+	public void eviterRobot() {
+		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
+			float distanceProvisoire=distance.getDistance();
+			Delay.msDelay(100);
+			if(distance.getDistance()<distanceProvisoire-5)
+			a.tournerD(100);
+			a.avancer(150,100);
+			a.tournerG(100);
+		}
+	}
+
+	public void avancerPlusPrendrePalet(int vitesse) {
+		if (pince.estFermée())
 			pince.ouvrir();
 		a.setVitesse(vitesse);
 		a.avancer();
@@ -74,24 +85,7 @@ public class Principal {
 		pince.fermer();
 	}
 
-	public void prendrePremierPalet() {
-		a.setVitesse(350);
-		avancerPlusPrendrePalet(180);
-		a.tournerD(45);
-		a.avancer(450);
-		a.tournerG(45);
-		a.avancer();
-		while(color.nomCouleur(color.getCouleur())!="BLANC") {
-			eviterRobot();
-		}
-		a.tournerG(45);
-        	a.avancerAsync(500);
-        	a.tournerD(45);
-		a.stop();
-	}
-
-
-public void recherche2() {
+	public void recherche2() {
 		float[] tab = new float[0];
 		a.asyncTournerG((double)360);
 		float min = (float)0.55;
@@ -171,7 +165,6 @@ public void recherche2() {
 			}if( (tab[i]!=0) && (tab[i-1]-0.05<min) && (tab[i]-0.05>min) ){
 				index2 = i;
 			}
-			
 		}
 		float[] t = new float[] {min, indexMin, index1, index2};
 		System.out.println("Minimum :" + Arrays.toString(t));
@@ -179,16 +172,32 @@ public void recherche2() {
 		return t;
 	}
 	
-	public void eviterRobot() {
-		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
-			float distanceProvisoire=distance.getDistance();
-			Delay.msDelay(100);
-			if(distance.getDistance()<distanceProvisoire-5)
-			a.tournerD(100);
-			a.avancer(150,100);
-			a.tournerG(100);
-		}
+	
+	public void ramenerPalet () {
+		recalibrage();
+		while (color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+			a.avancerAsync(100);
+			}
+		pince.ouvrir();
 	}
+
+	public void prendrePremierPalet() {
+		a.setVitesse(350);
+		avancerPlusPrendrePalet(180);
+		a.tournerD(45);
+		a.avancer(450);
+		a.tournerG(45);
+		a.avancer();
+		while(color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+		}
+		a.tournerG(45);
+        	a.avancerAsync(500);
+        	a.tournerD(45);
+		a.stop();
+	}
+
 
 	public void ramenerDeuxPalets() {
 		a.tournerD(180);
@@ -203,7 +212,8 @@ public void recherche2() {
 		a.tournerD(180);
 		
 	}
-	public void placementApresDebut(){
+
+	public void RejoindreMilieuApresDébut(){
 		if (position == 1) {
 			a.tournerD(90);
 			a.avancer(250);
