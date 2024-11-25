@@ -37,7 +37,8 @@ public class Principal {
 	private static Pince pince;
 	private static DistanceCapteur distance;
 	private static CouleurCapteur color;
-	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite;
+	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite
+	private int angle; //représente l'angle vers lequel le robot est tourné
  	
 	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
 		this.a=action;
@@ -45,31 +46,37 @@ public class Principal {
 		this.touch=t;
 		this.distance=d;
 		this.color=c;
+		this.angle=0;
 	}
+
 	public void setPosition(int p) {
 		position=p;
 	}
+
 	public int getPosition() {
 		return position;
 	}
 
 	public void recalibrage() {//S'orienter vers les cages adverses, reclaibrage basique sans accident
 				int ang= angle%360;
+				this.angle=0;
 				a.tournerG(ang);
 			}
-	public void avancerPlusPrendrePalet(int v) {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
+
+	public void avancerPlusPrendrePalet(int vitesse) {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
 		if(pince.estFermée())
 			pince.ouvrir();
-		a.setVitesse(v);
+		a.setVitesse(vitesse);
 		a.avancer();
 		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
 		}
 		a.stop();
 		pince.fermer();
 	}
+
 	public void prendrePremierPalet() {
 		a.setVitesse(350);
-		avancerPlusPrendrePalet();
+		avancerPlusPrendrePalet(180);
 		a.tournerD(45);
 		a.avancer(450);
 		a.tournerG(45);
@@ -182,6 +189,7 @@ public void recherche2() {
 			a.tournerG(100);
 		}
 	}
+
 	public void ramenerDeuxPalets() {
 		a.tournerD(180);
 		avancerPlusPrendrePalet(180);
