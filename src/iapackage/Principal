@@ -51,7 +51,8 @@ public class Principal {
 				a.tournerG(ang);
 			}
 	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
-		pince.ouvrir();
+		if(pince.estFermée())
+			pince.ouvrir();
 		a.setVitesse(200);
 		a.avancer();
 		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
