@@ -50,6 +50,9 @@ public class Action {
 		pilot.setLinearSpeed(speed);
 		pilot.forward();
 	}
+	public void avancerAsync(int distance) {
+		pilot.travel(distance,true);
+	}
 	public void setVitesse(int v) {
 		pilot.setLinearSpeed(v);
 	}
