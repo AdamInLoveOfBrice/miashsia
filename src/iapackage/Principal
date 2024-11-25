@@ -246,7 +246,7 @@ public class Principal {
 			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
 			p.ramenerDeuxPalets();
 		}
-		p.placementApresDebut();
+		p.RejoindreMilieuApresDébut();
 		p.recherche();
 		p.avancerPlusPrendrePalet();
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
