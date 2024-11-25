@@ -57,19 +57,16 @@ public class Principal {
 				int ang= angle%360;
 				a.tournerG(ang);
 			}
-	public void avancerPlusPrendrePalet() {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
+	public void avancerPlusPrendrePalet(int v) {//avance jusqu'a ce qu'un palet soit touché, puis ferme les pinces
 		if(pince.estFermée())
 			pince.ouvrir();
-		a.setVitesse(200);
+		a.setVitesse(v);
 		a.avancer();
 		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
 		}
 		a.stop();
 		pince.fermer();
-		a.tournerG(180);
-		a.avancer(200);
 	}
-
 	public void prendrePremierPalet() {
 		a.setVitesse(350);
 		avancerPlusPrendrePalet();
