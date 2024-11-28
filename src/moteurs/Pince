@@ -1,4 +1,4 @@
-package moteurs;
+package Moteur;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
@@ -10,34 +10,43 @@ import lejos.robotics.RegulatedMotor;
 public class Pince {
 
 	private RegulatedMotor pinces;
-	int angle=0;
-int a=1200;
+	public boolean ouvert;
+	public int a;
+
 	public Pince(Port pincesPort) {
 		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
-		angle=0;
-		
+		a=0;
+		ouvert=false;
+	}
+	
+	
+	public void fermer(){ // si les pinces sont ouvertes alors on peut fermer, et on on change le boolean en false pour dire que ces pinces sont desormais fermé
+		if(getBoolean()==true) {
+			pinces.rotate(-a);
+		}
+		this.ouvert=false;
 	}
 
-	public void fermer(){
-		pinces.rotate(a);
-		this.angle=this.angle-a;
-	}
-
-	public void fermer(int angle){
+	/*public void fermer(int angle){
 		pinces.rotate(-angle);
 		this.angle=this.angle-angle;
+	}*/
+
+	public void ouvrir() {// si les pinces sont fermer alors on peut ouvrir, et on on change le boolean en true pour dire que ces pinces sont desormais ouvert
+		if(getBoolean()==true) {
+			this.pinces.rotate(a);
+		}
+		this.ouvert=true;
 	}
 
-	public void ouvrir() {
-		this.pinces.rotate(a);
-		this.angle=this.angle+a;
-	}
-
-	public void ouvrir(int angle){
+	/*public void ouvrir(int angle){
 		pinces.rotate(angle);
 		this.angle=this.angle+angle;
-	}
-	public boolean estFermée() {
-		return (this.angle==a);
+	}*/
+	
+	public boolean getBoolean() {
+		return this.ouvert;
 	}
 }
+
+
