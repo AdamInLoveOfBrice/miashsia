@@ -37,6 +37,13 @@ public class DistanceCapteur {
 		return sample;
 	}
 
+public EV3UltrasonicSensor getCapteurDistance() {
+		return capteurDistance;
+	}
+	public SampleProvider getDistanceSampler() {
+		return distanceSampler;
+	}
+
 	public float getDistance() {
         setSample();  // Remplir le tableau sample avec les données du capteur
         return sample[0];  // Retourner la première valeur, qui est la distance mesurée en mètres
