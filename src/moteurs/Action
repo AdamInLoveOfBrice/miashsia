@@ -56,7 +56,7 @@ public class Action {
 	public void setVitesse(int v) {
 		pilot.setLinearSpeed(v);
 	}
-	public void avancer(double distance, int speed) {
+	public void avancer(int distance, int speed) {
 		pilot.setLinearSpeed(speed);
 		pilot.travel(distance);
 		pilot.stop(); 
@@ -64,7 +64,7 @@ public class Action {
 	public void reculer() {
 		pilot.backward();
 	}
-	public void reculer(double distance, int speed) {
+	public void reculer(int distance, int speed) {
 		pilot.setLinearSpeed(speed);
 		pilot.travel(-distance);
 		pilot.stop(); 
@@ -76,11 +76,11 @@ public class Action {
 		pilot.setAngularSpeed(100);
 		pilot.rotate(1.033*(double)angle);
 	}
-	public void tournerG(double angle) {
+	public void tournerG(int angle) {
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle);
 	}
-	public void asyncTournerG(double angle) {
+	public void asyncTournerG(int angle) {
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle,true);
 	}
