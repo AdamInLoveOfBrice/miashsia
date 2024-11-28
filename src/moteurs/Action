@@ -26,7 +26,7 @@ import lejos.robotics.navigation.MovePilot.*;
 
 public class Action {
 	
-	private Wheel motorG ; //bah si, ligne 42
+	private Wheel motorG ;
 	private Wheel motorD ; 
 	private Chassis chassis ; 
 	private MovePilot pilot ;
