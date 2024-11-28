@@ -84,6 +84,11 @@ public class Action {
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle,true);
 	}
+
+public MovePilot getPilot() {
+		return pilot;
+		}
+	
 	
 	public boolean isMoving() {
 		return pilot.isMoving();
