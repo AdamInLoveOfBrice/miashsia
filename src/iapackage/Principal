@@ -39,7 +39,7 @@ public class Principal {
 	private static CouleurCapteur color;
 	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite
 	private int angle; //représente l'angle vers lequel le robot est tourné
- 	
+
 	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
 		this.a=action;
 		this.pince=pince;
@@ -47,7 +47,6 @@ public class Principal {
 		this.distance=d;
 		this.color=c;
 		this.angle=0;
-		this.position=0;
 	}
 
 	public void setPosition(int p) {
@@ -69,7 +68,7 @@ public class Principal {
 			float distanceProvisoire=distance.getDistance();
 			Delay.msDelay(100);
 			if(distance.getDistance()<distanceProvisoire-5)
-			a.tournerD(100);
+				a.tournerD(100);
 			a.avancer(150,100);
 			a.tournerG(100);
 		}
@@ -110,13 +109,13 @@ public class Principal {
 					a.tournerD(30); //on se recalibre devant le palet
 				}
 			}
-			
+
 		}
 
 		//System.out.println(Arrays.toString(tab));
 		System.out.println(tab.length);
 	}
-	
+
 	public void recherche() {
 		distance.ouvrir();
 		Delay.msDelay(200);
@@ -128,12 +127,12 @@ public class Principal {
 			i++;
 		}
 		System.out.println(sample.length);
-		
+
 		float[] min = min(sample);
-		
+
 		//System.out.println(Arrays.toString(sample));
 		//System.out.println(Arrays.toString(min));
-		
+
 
 		System.out.println(min[0]);
 
@@ -149,9 +148,9 @@ public class Principal {
 		pince.fermer();
 		a.tournerD(180);
 		a.avancer(300, 100);
-	//TODO implémenter l'angle pour la "boussole"
+		//TODO implémenter l'angle pour la "boussole"
 	}
-	
+
 	public static float[] min(float[] tab) {
 		float min = tab[0];
 		int indexMin = 0;
@@ -172,14 +171,14 @@ public class Principal {
 		System.out.println(tab.length);
 		return t;
 	}
-	
-	
+
+
 	public void ramenerPalet () {
 		recalibrage();
 		while (color.nomCouleur(color.getCouleur())!="BLANC") {
 			eviterRobot();
 			a.avancerAsync(100);
-			}
+		}
 		pince.ouvrir();
 	}
 
@@ -194,8 +193,8 @@ public class Principal {
 			eviterRobot();
 		}
 		a.tournerG(45);
-        	a.avancerAsync(500);
-        	a.tournerD(45);
+		a.avancerAsync(500);
+		a.tournerD(45);
 		a.stop();
 	}
 
@@ -211,7 +210,7 @@ public class Principal {
 		a.avancer(1200,3000);
 		pince.ouvrir();
 		a.tournerD(180);
-		
+
 	}
 
 	public void RejoindreMilieuApresDébut(){
@@ -249,7 +248,7 @@ public class Principal {
 		}
 		p.RejoindreMilieuApresDébut();
 		p.recherche();
-		p.avancerPlusPrendrePalet(3000);
+		p.avancerPlusPrendrePalet(200);
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
 			p.eviterRobot();
 		}
