@@ -47,6 +47,7 @@ public class Principal {
 		this.distance=d;
 		this.color=c;
 		this.angle=0;
+		this.position=0;
 	}
 
 	public void setPosition(int p) {
@@ -233,7 +234,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		String EstCeQueYaQuelquUn = "Ya Personne";
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new Couleur(SensorPort.S1), 1);
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new Couleur(SensorPort.S1));
 		p.setPosition(1); // rentrer la position en début d'epreuve
 		p.avancerPlusPrendrePalet(3000);
 		if (EstCeQueYaQuelquUn == "Ya Personne") {
