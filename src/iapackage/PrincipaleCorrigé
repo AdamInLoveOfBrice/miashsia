@@ -1,0 +1,256 @@
+package iapackage;
+
+import moteurs.*;
+import java.util.Arrays;
+
+import capteurs.*;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.utility.Delay;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.lcd.GraphicsLCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.TachoMotorPort;
+import lejos.robotics.Color;
+import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Wheel;
+import lejos.utility.Delay;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.navigation.MovePilot.*;
+import lejos.robotics.SampleProvider;
+
+
+public class Principal {
+	private static Action a;
+	private static ToucherCapteur touch;
+	private static Pince pince;
+	private static DistanceCapteur distance;
+	private static CouleurCapteur color;
+	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite
+	private int angle; //représente l'angle vers lequel le robot est tourné
+
+	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
+		this.a=action;
+		this.pince=pince;
+		this.touch=t;
+		this.distance=d;
+		this.color=c;
+		this.angle=0;
+	}
+
+	public void setPosition(int p) {
+		position=p;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void recalibrage() {
+		int ang= angle%360;
+		this.angle=0;
+		a.tournerG(ang);
+	}
+
+	public void eviterRobot() {
+		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
+			float distanceProvisoire=distance.getDistance();
+			Delay.msDelay(100);
+			if(distance.getDistance()<distanceProvisoire-5)
+				a.tournerD(100);
+			a.avancer(150,100);
+			a.tournerG(100);
+		}
+	}
+
+	public void avancerPlusPrendrePalet(int vitesse) {
+		if (pince.estFermée())
+			pince.ouvrir();
+		a.setVitesse(vitesse);
+		a.avancer();
+		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
+		}
+		a.stop();
+		pince.fermer();
+	}
+
+	public void recherche2() {
+		float[] tab = new float[0];
+		a.asyncTournerG(360);
+		float min = (float)0.55;
+		System.out.println(min);
+		while(a.isMoving()) {
+			tab=distance.recherche(tab);
+			int debut=0;
+			int fin=0;
+			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.05<min){
+				debut=tab.length-1;
+				System.out.println("index debut = " + debut + " , valeur = " +tab[tab.length-1]);
+			}
+			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
+				min=tab[tab.length-1];
+			}if((tab.length>1) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
+				fin=tab.length-1;
+				System.out.println("index fin = " + fin + " , valeur = " +tab[tab.length-1]);
+				System.out.println(fin-debut);
+				if ((fin-debut)<300) { //est un nombre qui peut etre ajusté en fonction du nombre de valeur que renvoie la detection d'un palet (pour etre sur que ce n'est pas un mur ou un  robot)
+					a.stop(); //on s'arrete quand le palet n'est plus dans notre vision
+					a.tournerD(30); //on se recalibre devant le palet
+				}
+			}
+
+		}
+
+		//System.out.println(Arrays.toString(tab));
+		System.out.println(tab.length);
+	}
+
+	public void recherche() {
+		distance.ouvrir();
+		Delay.msDelay(200);
+		float[] sample = new float[0];
+		int i = 0;
+		a.asyncTournerG(360);
+		while(a.isMoving()) {
+			sample=distance.recherche(sample);
+			i++;
+		}
+		System.out.println(sample.length);
+
+		float[] min = min(sample);
+
+		//System.out.println(Arrays.toString(sample));
+		//System.out.println(Arrays.toString(min));
+
+
+		System.out.println(min[0]);
+
+		double angleMin = 360.0 *((min[2]+min[3])/2)*1.4 / i; //le *1.4 est un coefficient estimé qui corrige l'angle 
+		System.out.println(angleMin);
+
+		a.tournerG((int)angleMin);
+		pince.ouvrir();
+		a.avancer(100);
+		while(!(touch.estTouche())){
+		}
+		a.stop();
+		pince.fermer();
+		a.tournerD(180);
+		a.avancer(300, 100);
+		//TODO implémenter l'angle pour la "boussole"
+	}
+
+	public static float[] min(float[] tab) {
+		float min = tab[0];
+		int indexMin = 0;
+		int index1 = 0, index2 = 0;
+		for(int i=1;i<tab.length;i++) {
+			if(tab[i]!=0 && tab[i]+0.05<min){
+				index1 = i;
+			}
+			if(tab[i]!=0 && tab[i]<min) {
+				min=tab[i];
+				indexMin=i;
+			}if( (tab[i]!=0) && (tab[i-1]-0.05<min) && (tab[i]-0.05>min) ){
+				index2 = i;
+			}
+		}
+		float[] t = new float[] {min, indexMin, index1, index2};
+		System.out.println("Minimum :" + Arrays.toString(t));
+		System.out.println(tab.length);
+		return t;
+	}
+
+
+	public void ramenerPalet () {
+		recalibrage();
+		while (color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+			a.avancerAsync(100);
+		}
+		pince.ouvrir();
+	}
+
+	public void prendrePremierPalet() {
+		a.setVitesse(350);
+		avancerPlusPrendrePalet(180);
+		a.tournerD(45);
+		a.avancer(450);
+		a.tournerG(45);
+		a.avancer();
+		while(color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+		}
+		a.tournerG(45);
+		a.avancerAsync(500);
+		a.tournerD(45);
+		a.stop();
+	}
+
+
+	public void ramenerDeuxPalets() {
+		a.tournerD(180);
+		avancerPlusPrendrePalet(180);
+		a.tournerD(180);
+		a.avancer(600,3000);
+		pince.ouvrir();
+		avancerPlusPrendrePalet(180);
+		a.tournerD(180);
+		a.avancer(1200,3000);
+		pince.ouvrir();
+		a.tournerD(180);
+
+	}
+
+	public void RejoindreMilieuApresDébut(){
+		if (position == 1) {
+			a.tournerD(90);
+			a.avancer(250);
+			a.tournerG(90);
+			a.avancer(900);
+		}
+		if (position == 2) {
+			a.avancer(900);
+		}
+		else {
+			a.tournerG(90);
+			a.avancer(250);
+			a.tournerD(90);
+			a.avancer(900);
+		}
+	}
+
+	public static void main(String[] args) {
+		String EstCeQueYaQuelquUn = "Ya Personne";
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new CouleurCapteur(SensorPort.S1));
+		p.setPosition(1); // rentrer la position en début d'epreuve
+		p.avancerPlusPrendrePalet(3000);
+		if (EstCeQueYaQuelquUn == "Ya Personne") {
+			p.ramenerDeuxPalets();
+		}
+		else {
+			a.tournerD(90);
+			a.avancer(500);
+			a.tournerG(90);
+			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
+			p.ramenerDeuxPalets();
+		}
+		p.RejoindreMilieuApresDébut();
+		p.recherche();
+		p.avancerPlusPrendrePalet(200);
+		while(color.nomCouleur(color.getCouleur())!="BLANC") {
+			p.eviterRobot();
+		}
+	}
+}
