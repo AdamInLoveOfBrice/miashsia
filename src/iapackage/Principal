@@ -88,7 +88,7 @@ public class Principal {
 
 	public void recherche2() {
 		float[] tab = new float[0];
-		a.asyncTournerG((double)360);
+		a.asyncTournerG(360);
 		float min = (float)0.55;
 		System.out.println(min);
 		while(a.isMoving()) {
@@ -122,7 +122,7 @@ public class Principal {
 		Delay.msDelay(200);
 		float[] sample = new float[0];
 		int i = 0;
-		a.asyncTournerG((double)360);
+		a.asyncTournerG(360);
 		while(a.isMoving()) {
 			sample=distance.recherche(sample);
 			i++;
@@ -140,7 +140,7 @@ public class Principal {
 		double angleMin = 360.0 *((min[2]+min[3])/2)*1.4 / i; //le *1.4 est un coefficient estimé qui corrige l'angle 
 		System.out.println(angleMin);
 
-		a.tournerG(angleMin);
+		a.tournerG((int)angleMin);
 		pince.ouvrir();
 		a.avancer(100);
 		while(!(touch.estTouche())){
@@ -234,7 +234,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		String EstCeQueYaQuelquUn = "Ya Personne";
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new Couleur(SensorPort.S1));
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new CouleurCapteur(SensorPort.S1));
 		p.setPosition(1); // rentrer la position en début d'epreuve
 		p.avancerPlusPrendrePalet(3000);
 		if (EstCeQueYaQuelquUn == "Ya Personne") {
@@ -249,7 +249,7 @@ public class Principal {
 		}
 		p.RejoindreMilieuApresDébut();
 		p.recherche();
-		p.avancerPlusPrendrePalet();
+		p.avancerPlusPrendrePalet(3000);
 		while(color.nomCouleur(color.getCouleur())!="BLANC") {
 			p.eviterRobot();
 		}
