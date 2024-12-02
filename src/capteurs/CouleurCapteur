@@ -33,8 +33,16 @@ public class CouleurCapteur {
 			return "gris";
 		}else if(r>25 && g>25 && b>25) {
 			return "blanc";
+		}else if((r>30 && g>20 && b<10)) {
+			return "jaune";
+		}else if(r>b && r>g) {
+			return "rouge";
+		}else if(g>b && g>r) {
+			return "vert";
+		}else if(b>g && b>r) {
+			return "bleu";
 		}else {
-			return "autre";
+			return "couleur non présente sur le tableau";
 		}
 	}
 	public static String nomCouleur(Color c) {
