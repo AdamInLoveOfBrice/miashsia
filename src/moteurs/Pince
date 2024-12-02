@@ -15,13 +15,12 @@ public class Pince {
 
 	public Pince(Port pincesPort) {
 		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
-		
 		ouvert=false;
 	}
 	
 	
 	public void fermer(){ // si les pinces sont ouvertes alors on peut fermer, et on on change le boolean en false pour dire que ces pinces sont desormais fermé
-		if(estOuvert()==true) {
+		if(this.estOuvert()) {
 			pinces.rotate(-1000);
 		}
 		this.ouvert=false;
@@ -33,7 +32,7 @@ public class Pince {
 	}*/
 
 	public void ouvrir() {// si les pinces sont fermer alors on peut ouvrir, et on on change le boolean en true pour dire que ces pinces sont desormais ouvert
-		if(estOuvert()==false) {
+		if(!this.estOuvert()) {
 			this.pinces.rotate(1000);
 		}
 		this.ouvert=true;
