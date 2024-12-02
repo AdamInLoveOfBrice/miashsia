@@ -47,7 +47,7 @@ public class Pince {
 		return this.ouvert;
 	}
 
-	public boolean est Fermée(){
+	public boolean estFermée(){
 		if(ouvert){
 			return false;
 		}else{
