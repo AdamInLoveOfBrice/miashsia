@@ -115,10 +115,10 @@ public class Principal {
 			}
 		}System.out.println(tab.length);	
 		if(b) {
-			this.recherche2();
+			this.recherche();
 		}
 		//System.out.println(Arrays.toString(tab));
-
+	}
 
 	public void ramenerPalet () {
 		recalibrage();
