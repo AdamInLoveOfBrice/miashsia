@@ -85,92 +85,39 @@ public class Principal {
 		pince.fermer();
 	}
 
-	public void recherche2() {
+	public void recherche() {
 		float[] tab = new float[0];
-		a.asyncTournerG(360);
+		int j=0;
+		int t=0;
+		boolean b = true;
 		float min = (float)0.55;
-		System.out.println(min);
+		a.asyncTournerG((double)360);
 		while(a.isMoving()) {
 			tab=distance.recherche(tab);
-			int debut=0;
-			int fin=0;
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.05<min){
-				debut=tab.length-1;
-				System.out.println("index debut = " + debut + " , valeur = " +tab[tab.length-1]);
+				j=tab.length-1;
+				System.out.println("index debut = " + j + " , valeur = " +tab[j]);
 			}
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
 				min=tab[tab.length-1];
-			}if((tab.length>1) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
-				fin=tab.length-1;
-				System.out.println("index fin = " + fin + " , valeur = " +tab[tab.length-1]);
-				System.out.println(fin-debut);
-				if ((fin-debut)<300) { //est un nombre qui peut etre ajusté en fonction du nombre de valeur que renvoie la detection d'un palet (pour etre sur que ce n'est pas un mur ou un  robot)
-					a.stop(); //on s'arrete quand le palet n'est plus dans notre vision
-					a.tournerD(30); //on se recalibre devant le palet
+			}if((tab.length>1) && (j!=0) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
+				t=tab.length-1;
+				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
+				System.out.println(t-j);
+				if ((t-j)<300 && (t-j)>10) {
+					a.stop();
+					a.tournerD(40);
+					b=false;
 				}
+				min=(float)0.55;
+				j=0;
+				t=0;
 			}
-
+		}System.out.println(tab.length);	
+		if(b) {
+			this.recherche2();
 		}
-
 		//System.out.println(Arrays.toString(tab));
-		System.out.println(tab.length);
-	}
-
-	public void recherche() {
-		distance.ouvrir();
-		Delay.msDelay(200);
-		float[] sample = new float[0];
-		int i = 0;
-		a.asyncTournerG(360);
-		while(a.isMoving()) {
-			sample=distance.recherche(sample);
-			i++;
-		}
-		System.out.println(sample.length);
-
-		float[] min = min(sample);
-
-		//System.out.println(Arrays.toString(sample));
-		//System.out.println(Arrays.toString(min));
-
-
-		System.out.println(min[0]);
-
-		double angleMin = 360.0 *((min[2]+min[3])/2)*1.4 / i; //le *1.4 est un coefficient estimé qui corrige l'angle 
-		System.out.println(angleMin);
-
-		a.tournerG((int)angleMin);
-		pince.ouvrir();
-		a.avancer(100);
-		while(!(touch.estTouche())){
-		}
-		a.stop();
-		pince.fermer();
-		a.tournerD(180);
-		a.avancer(300, 100);
-		//TODO implémenter l'angle pour la "boussole"
-	}
-
-	public static float[] min(float[] tab) {
-		float min = tab[0];
-		int indexMin = 0;
-		int index1 = 0, index2 = 0;
-		for(int i=1;i<tab.length;i++) {
-			if(tab[i]!=0 && tab[i]+0.05<min){
-				index1 = i;
-			}
-			if(tab[i]!=0 && tab[i]<min) {
-				min=tab[i];
-				indexMin=i;
-			}if( (tab[i]!=0) && (tab[i-1]-0.05<min) && (tab[i]-0.05>min) ){
-				index2 = i;
-			}
-		}
-		float[] t = new float[] {min, indexMin, index1, index2};
-		System.out.println("Minimum :" + Arrays.toString(t));
-		System.out.println(tab.length);
-		return t;
-	}
 
 
 	public void ramenerPalet () {
