@@ -90,7 +90,7 @@ public class Principal {
 		int j=0;
 		int t=0;
 		boolean b = true;
-		float min = (float)0.55;
+		float min = (float)0.75;
 		a.asyncTournerG((double)360);
 		while(a.isMoving()) {
 			tab=distance.recherche(tab);
@@ -100,11 +100,23 @@ public class Principal {
 			}
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
 				min=tab[tab.length-1];
-			}if((tab.length>1) && (j!=0) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.05<min) && (tab[tab.length-1]-0.05>min) ){
+			}if((tab.length>1) && (j!=0) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.1<min) && (tab[tab.length-1]-0.1>min) ){
 				t=tab.length-1;
 				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
 				System.out.println(t-j);
-				if ((t-j)<300 && (t-j)>10) {
+				if (min>0.15 && min<0.35 && (t-j)<300 && (t-j)>10) {
+					a.stop();
+					a.tournerD(40);
+					b=false;
+				}else if (min>0.35 && min<0.45 && (t-j)<200 && (t-j)>10) {
+					a.stop();
+					a.tournerD(40);
+					b=false;
+				}else if (min>0.45 && min<0.55 && (t-j)<100 && (t-j)>10) {
+					a.stop();
+					a.tournerD(40);
+					b=false;
+				}else if (min>0.55 && min<0.75 && (t-j)<80 && (t-j)>10) {
 					a.stop();
 					a.tournerD(40);
 					b=false;
@@ -114,10 +126,10 @@ public class Principal {
 				t=0;
 			}
 		}System.out.println(tab.length);	
-		if(b) {
-			this.recherche();
-		}
-		//System.out.println(Arrays.toString(tab));
+		//if(b) {
+			//this.recherche();
+		//}
+		System.out.println(Arrays.toString(tab));
 	}
 
 	public void ramenerPalet () {
