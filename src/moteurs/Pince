@@ -44,7 +44,7 @@ public class Pince {
 		this.angle=this.angle+angle;
 	}*/
 	
-	public boolean getBoolean() {
+	public boolean estOuvert() {
 		return this.ouvert;
 	}
 }
