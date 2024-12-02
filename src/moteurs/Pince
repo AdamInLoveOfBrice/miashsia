@@ -33,7 +33,7 @@ public class Pince {
 	}*/
 
 	public void ouvrir() {// si les pinces sont fermer alors on peut ouvrir, et on on change le boolean en true pour dire que ces pinces sont desormais ouvert
-		if(estOuvert()==true) {
+		if(estOuvert()==false) {
 			this.pinces.rotate(1000);
 		}
 		this.ouvert=true;
