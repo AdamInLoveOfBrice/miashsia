@@ -178,6 +178,33 @@ public class Principal {
 		}
 	}
 
+	public void test3palets1(){
+		
+		avancerPlusPrendrePalet(300);
+		seDecalerD();
+		avancerJusqueCouleur("blanc");
+		pince.ouvrir();
+		a.reculer(100, 300);
+		pince.fermer();
+		a.tournerG(90);
+		avancerJusqueCouleur("jaune");
+		a.avancer(100, 200);
+		a.tournerG(90);
+		avancerPlusPrendrePalet(300);
+		a.tournerG(180);
+		avancerJusqueCouleur("blanc");
+		pince.ouvrir();
+		a.reculer(100, 300);
+		pince.fermer();
+		a.tournerG(180);
+		avancerPlusPrendrePalet(300);
+		a.tournerG(180);
+		avancerJusqueCouleur("blanc");
+		pince.ouvrir();
+		a.reculer(100, 300);
+		pince.fermer();	
+	}
+
 	public static void main(String[] args) {
 		String EstCeQueYaQuelquUn = "Ya Personne";
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new CouleurCapteur(SensorPort.S1));
