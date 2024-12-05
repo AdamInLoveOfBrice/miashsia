@@ -305,6 +305,27 @@ public class Principal {
 				p.retourLigneBlanche();
 				p.retournerMilieu();
 			}
+		case 5: //---------------------------------vol s'ils se mettent au milieu---------------------------------
+			//se mettre à droite
+			p.prendrePremierPalet();
+			a.tournerG(90);
+			a.avancer(dCase);
+			a.tournerG(90);
+			p.avancerPlusPrendrePalet();//on prend leur palet du milieu
+			a.tournerG(180);
+			while(ligneBlanche) {
+			}
+			a.stop();
+			pince.ouvrir();
+			a.avancerAsync(-100); //TODO voir de combien reculer
+			pince.fermer();
+			a.tournerD(180);
+			a.avancer(dMid);
+			for(int i = 0; i<100; i++) {
+				p.recherche();
+				p.retourLigneBlanche();
+				p.retournerMilieu();
+			}
 		}
 	}
 }
