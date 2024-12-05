@@ -109,11 +109,11 @@ public class Principal {
 		int j=0;
 		int t=0;
 		boolean b = true;
-		float min = (float)0.75;
-		a.asyncTournerG((double)360);
+		float min = (float)0.80;
+		a.asyncTournerG(360);
 		while(a.isMoving()) {
 			tab=distance.recherche(tab);
-			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.05<min){
+			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.1<min){
 				j=tab.length-1;
 				System.out.println("index debut = " + j + " , valeur = " +tab[j]);
 			}
@@ -123,24 +123,41 @@ public class Principal {
 				t=tab.length-1;
 				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
 				System.out.println(t-j);
+				System.out.println("min = " + min);
 				if (min>0.15 && min<0.35 && (t-j)<300 && (t-j)>10) {
 					a.stop();
-					a.tournerD(40);
+					a.tournerD(52);
 					b=false;
-				}else if (min>0.35 && min<0.45 && (t-j)<200 && (t-j)>10) {
+					if (!avancerPlusPrendrePalet(200,(int)((min+0.3)*1000))){
+						a.reculer((int)(min+0.1)*1000, 250);
+						recherche();
+					}
+				}else if (min>0.35 && min<0.45 && (t-j)<250 && (t-j)>10) {
 					a.stop();
-					a.tournerD(40);
+					a.tournerD(54);
 					b=false;
-				}else if (min>0.45 && min<0.55 && (t-j)<100 && (t-j)>10) {
+					if (!avancerPlusPrendrePalet(200,(int)(min+0.3)*1000)){
+						a.reculer((int)(min+0.1)*1000, 250);
+						recherche();
+					}
+				}else if (min>0.45 && min<0.55 && (t-j)<200 && (t-j)>10) {
 					a.stop();
-					a.tournerD(40);
+					a.tournerD(54);
 					b=false;
-				}else if (min>0.55 && min<0.75 && (t-j)<80 && (t-j)>10) {
+					if (!avancerPlusPrendrePalet(200,(int)(min+0.3)*1000)){
+						a.reculer((int)(min+0.1)*1000, 250);
+						recherche();
+					}
+				}else if (min>0.55 && min<0.75 && (t-j)<100 && (t-j)>10) {
 					a.stop();
-					a.tournerD(40);
+					a.tournerD(54);
 					b=false;
+					if (!avancerPlusPrendrePalet(200,(int)(min+0.3)*1000)){
+						a.reculer((int)(min+0.1)*1000, 250);
+						recherche();
+					}
 				}
-				min=(float)0.55;
+				min=(float)0.80;
 				j=0;
 				t=0;
 			}
@@ -148,9 +165,8 @@ public class Principal {
 		//if(b) {
 			//this.recherche();
 		//}
-		System.out.println(Arrays.toString(tab));
+		//System.out.println(Arrays.toString(tab));
 	}
-
 	public void seDecalerD() {
 		a.tournerD(45);
 		a.avancer(300, 300);
