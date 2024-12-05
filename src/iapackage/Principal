@@ -222,5 +222,19 @@ public class Principal {
 		int strategie = 0;
 		int dMid = 500; //TODO distance pour aller de la ligne blanche au milieu
 		int dCase = 300; //TODO distance pour avancer de pile une case
+		switch (strategie) {
+		case 0: //---------------------------------------en face à gauche---------------------------------------
+			a.tournerD(90);
+			a.avancer(dCase);
+			a.tournerG(90);
+			p.test1();
+			a.tournerG(180);
+			a.avancer(dMid);
+			for(int i = 0; i<100; i++) {
+				p.recherche();
+				p.retourLigneBlanche();
+				p.retournerMilieu();
+			}
+		}
 	}
 }
