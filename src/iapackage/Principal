@@ -132,6 +132,27 @@ public class Principal {
 		System.out.println(Arrays.toString(tab));
 	}
 
+	public void seDecalerD() {
+		a.tournerD(45);
+		a.avancer(300, 300);
+		a.tournerG(45);
+	}
+	
+	public void seDecalerG() {
+		a.tournerG(45);
+		a.avancer(300, 300);
+		a.tournerD(45);
+	}
+	
+	public void avancerJusqueCouleur(String c) {
+		a.avancer(300);
+		Color rgb = color.getCouleur();
+		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != c) {
+			rgb = color.getCouleur();
+		}a.stop();
+		
+	}
+
 	public void ramenerPalet () {
 		recalibrage();
 		while (color.nomCouleur(color.getCouleur())!="BLANC") {
