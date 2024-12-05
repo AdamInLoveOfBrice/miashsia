@@ -153,6 +153,15 @@ public class Principal {
 		
 	}
 
+	public void avancerJusqueJauneRouge() {
+		a.avancer(300);
+		Color rgb = color.getCouleur();
+		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune") {
+			rgb = color.getCouleur();
+		}a.stop();
+		
+	}
+
 	public void ramenerPalet () {
 		recalibrage();
 		while (color.nomCouleur(color.getCouleur())!="BLANC") {
