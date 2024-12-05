@@ -337,6 +337,17 @@ public class Principal {
 				p.retourLigneBlanche();
 				p.retournerMilieu();
 			}
+		case 7: //-----------------------------------------normal à gauche-----------------------------------------
+			p.test1();
+			a.tournerD(90);
+			a.avancer(dCase);
+			a.tournerD(90);
+			a.avancer(dMid);
+			for(int i = 0; i<100; i++) {
+				p.recherche();
+				p.retourLigneBlanche();
+				p.retournerMilieu();
+			}
 		}
 	}
 }
