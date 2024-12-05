@@ -223,12 +223,13 @@ public class Principal {
 	}
 
 public void prendrePremierPalaiAsync () {
-		a.setVitesse(350);
-		if (!pince.estOuvert())
-			pince.ouvrir();
-		a.setVitesse(200);
+		a.setVitesse(800);
 		a.avancerAsync(2000);
-		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			pince.ouvrir();
+			if (touch.estTouche()){
+				a.stop();
+			}
 		}	
 		pince.fermer();
 		a.tournerD(45);
