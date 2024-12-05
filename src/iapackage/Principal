@@ -157,6 +157,26 @@ public class Principal {
 		a.stop();
 	}
 
+public void prendrePremierPalaiAsync () {
+		a.setVitesse(350);
+		if (pince.estFermée())
+			pince.ouvrir();
+		a.setVitesse(200);
+		a.avancerAsync(2000);
+		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
+		}	
+		pince.fermer();
+		a.tournerD(45);
+		a.avancer(450);
+		a.tournerG(45);
+		while(color.nomCouleur(color.getCouleur())!="BLANC") {
+			eviterRobot();
+		}
+		a.tournerG(45);
+		a.avancerAsync(500);
+		a.tournerD(45);
+		a.stop();
+	}
 
 	public void ramenerDeuxPalets() {
 		a.tournerD(180);
