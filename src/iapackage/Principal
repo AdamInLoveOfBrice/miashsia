@@ -224,7 +224,7 @@ public class Principal {
 
 public void prendrePremierPalaiAsync () {
 		a.setVitesse(350);
-		if (pince.estFermée())
+		if (!pince.estOuvert())
 			pince.ouvrir();
 		a.setVitesse(200);
 		a.avancerAsync(2000);
