@@ -1,0 +1,10 @@
+public static void main(String[] args) {
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new CouleurCapteur(SensorPort.S1));
+		a.setVitesse(300);
+		a.avancerAsync(500);
+		pince.fermer();
+		while(a.isMoving()) {
+		}
+		a.stop();
+		}
+}
