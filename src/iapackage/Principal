@@ -172,10 +172,10 @@ public class Principal {
 		
 	}
 
-	public void avancerJusqueJauneRouge() {
+	public void avancerJusqueLigne() {
 		a.avancer(300);
 		Color rgb = color.getCouleur();
-		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune") {
+		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune"|| color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "noir") {
 			rgb = color.getCouleur();
 		}a.stop();
 		
