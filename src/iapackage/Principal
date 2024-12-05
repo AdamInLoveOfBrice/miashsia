@@ -218,25 +218,9 @@ public class Principal {
 	}
 
 	public static void main(String[] args) {
-		String EstCeQueYaQuelquUn = "Ya Personne";
 		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4), new CouleurCapteur(SensorPort.S1));
-		p.setPosition(1); // rentrer la position en début d'epreuve
-		p.avancerPlusPrendrePalet(3000);
-		if (EstCeQueYaQuelquUn == "Ya Personne") {
-			p.ramenerDeuxPalets();
-		}
-		else {
-			a.tournerD(90);
-			a.avancer(500);
-			a.tournerG(90);
-			p.setPosition(p.getPosition()+1); //ajuste la position en fonction du cas rencontré.
-			p.ramenerDeuxPalets();
-		}
-		p.RejoindreMilieuApresDébut();
-		p.recherche();
-		p.avancerPlusPrendrePalet(200);
-		while(color.nomCouleur(color.getCouleur())!="BLANC") {
-			p.eviterRobot();
-		}
+		int strategie = 0;
+		int dMid = 500; //TODO distance pour aller de la ligne blanche au milieu
+		int dCase = 300; //TODO distance pour avancer de pile une case
 	}
 }
