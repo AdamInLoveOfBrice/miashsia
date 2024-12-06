@@ -285,7 +285,7 @@ public void prendrePremierPalaiAsync () {
 			a.reculer(100, 300);
 			pince.fermer();
 			a.tournerG(90);
-			avancerJusqueJauneRouge();
+			avancerJusqueLigne();
 			a.avancer(100, 200);//on réavance bien sur la ligne
 			a.tournerG(90);
 		}else {
@@ -296,13 +296,13 @@ public void prendrePremierPalaiAsync () {
 			a.reculer(100, 300);
 			pince.fermer();
 			a.tournerD(90);
-			avancerJusqueJauneRouge();
+			avancerJusqueLigne();
 			a.avancer(100, 200);//on réavance bien sur la ligne
 			a.tournerD(90);
 		}
 	}
 
-	public void test3palets1(boolean droite){//quel coté
+public void test3palets1(boolean droite){//quel coté
 		if(droite) { //si on veut décaler à droite
 			avancerPlusPrendrePalet(300);
 			seDecalerD();
@@ -311,7 +311,7 @@ public void prendrePremierPalaiAsync () {
 			a.reculer(100, 300);
 			pince.fermer();
 			a.tournerG(90);
-			avancerJusqueJauneRouge();
+			avancerJusqueLigne();//TODO probleme
 			a.avancer(100, 200);
 			a.tournerG(90);
 			avancerPlusPrendrePalet(300);
@@ -335,7 +335,7 @@ public void prendrePremierPalaiAsync () {
 			a.reculer(100, 300);
 			pince.fermer();
 			a.tournerD(90);
-			avancerJusqueJauneRouge();
+			avancerJusqueLigne();
 			a.avancer(100, 200);
 			a.tournerD(90);
 			avancerPlusPrendrePalet(300);
