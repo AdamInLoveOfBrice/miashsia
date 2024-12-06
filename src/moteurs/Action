@@ -61,6 +61,11 @@ public class Action {
 		pilot.travel(distance);
 		pilot.stop(); 
 	}
+
+	public void ralentir() {
+		pilot.setLinearSpeed(150);
+	}
+
 	public void reculer() {
 		pilot.backward();
 	}
