@@ -60,7 +60,7 @@ public class Principal {
 	public void recalibrage() {
 		int ang= angle%360;
 		this.angle=0;
-		a.tournerG(ang);
+		a.tournerD(ang);
 	}
 
 	public void eviterRobot() {
