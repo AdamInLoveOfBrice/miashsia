@@ -47,7 +47,7 @@ public class Pince {
 		return this.ouvert;
 	}
 
-	public boolean estFermée(){
+	public boolean estFermée(){ // renvoie true ou false en fonction de si les pinces sont ouvertes 
 		if(ouvert){
 			return false;
 		}else{
