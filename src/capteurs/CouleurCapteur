@@ -59,4 +59,7 @@ public class CouleurCapteur {
 			return "autre";
 		}
 	}
+public void fermerCapteurCouleur() {
+		capteurCouleur.close(); 
+	}
 }
