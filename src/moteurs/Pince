@@ -19,7 +19,7 @@ public class Pince {
 	}
 	
 	
-	public void fermer(){ // si les pinces sont ouvertes alors on peut fermer, et on on change le boolean en false pour dire que ces pinces sont desormais fermé
+	public void fermer(){ // si les pinces sont ouvertes alors on peut fermer, et on on change le boolean en false pour dire que ces pinces sont desormais fermées
 		if(this.estOuvert()) {
 			pinces.rotate(-1000);
 		}
@@ -31,7 +31,13 @@ public class Pince {
 		this.angle=this.angle-angle;
 	}*/
 
-	public void ouvrir() {// si les pinces sont fermer alors on peut ouvrir, et on on change le boolean en true pour dire que ces pinces sont desormais ouvert
+	public void fermerObligatoirement() {// si les pinces sont ouvertes alors on peut fermer, et on on change le boolean en false pour dire que ces pinces sont desormais fermées
+		pinces.setSpeed(800);
+		pinces.rotate(-1000);
+		this.ouvert=false;
+	}
+
+	public void ouvrir() {// si les pinces sont fermer alors on peut ouvrir, et on on change le boolean en true pour dire que ces pinces sont desormais ouvertes
 		if(!this.estOuvert()) {
 			this.pinces.rotate(1000);
 		}
@@ -42,17 +48,15 @@ public class Pince {
 		pinces.rotate(angle);
 		this.angle=this.angle+angle;
 	}*/
-	
+	public void setOuvert(boolean b) {
+		ouvert=b;
+	}
 	public boolean estOuvert() {
 		return this.ouvert;
 	}
 
 	public boolean estFermée(){ // renvoie true ou false en fonction de si les pinces sont ouvertes 
-		if(ouvert){
-			return false;
-		}else{
-			return true;
-		}
+		return !this.ouvert;
 	}
 }
 
