@@ -190,7 +190,7 @@ public class Principal {
 
 	public void avancerJusqueLigne() {
 		avancerJusqueCouleur("blanc");
-		/*a.avancerAsync(300);à
+		/*a.avancerAsync(300);
 		Color rgb = color.getCouleur();
 		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune"|| color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "noir") {
 			rgb = color.getCouleur();
