@@ -181,7 +181,7 @@ public class Principal {
 		//}
 		//System.out.println(Arrays.toString(tab));
 	}
-	public void seDecalerD() {
+	public void seDecalerD() { // tourner a droite, avancer puis tourner a gauche
 		a.tournerD(45);
 		a.avancer(300, 300);
 		a.tournerG(45);
@@ -220,7 +220,7 @@ public class Principal {
 		a.tournerD(45);
 	}
 	
-	public void avancerJusqueCouleur(String c) {
+	public void avancerJusqueCouleur(String c) { // avancer jusqu'a qu'il detecte la couleur en parametre ( couleur en miniscule)
 		a.avancer(300);
 		Color rgb = color.getCouleur();
 		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != c) {
@@ -229,7 +229,7 @@ public class Principal {
 		
 	}
 
-	public void avancerJusqueLigne() {
+	public void avancerJusqueLigne() { // avancer jusqu'a des lignes horizontal donc rouge ou jaune ou noir, concretement cela nous fait decaler d'une ligne 
 		avancerJusqueCouleur("blanc");
 		/*a.avancerAsync(300);
 		Color rgb = color.getCouleur();
@@ -238,7 +238,7 @@ public class Principal {
 		}a.stop();*/
 	}
 
-	public void ramenerPalet () {
+	public void ramenerPalet () { // on l'utlise pas
 		recalibrage();
 		while (color.nomCouleur(color.getCouleur())!="BLANC") {
 			eviterRobot();
@@ -247,7 +247,7 @@ public class Principal {
 		pince.ouvrir();
 	}
 
-	public void prendrePremierPalet() {
+	public void prendrePremierPalet() { // on l'utilise pas 
 		a.setVitesse(350);
 		avancerPlusPrendrePalet(180);
 		a.tournerD(45);
@@ -263,7 +263,7 @@ public class Principal {
 		a.stop();
 	}
 
-	public void prendrePremierPalaiAsync () {
+	public void prendrePremierPalaiAsync () { // on l'utilise pas 
 		a.setVitesse(800);
 		a.avancerAsync(2000);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
@@ -285,7 +285,7 @@ public class Principal {
 		a.stop();
 	}
 
-	public void ramenerDeuxPalets() {
+	public void ramenerDeuxPalets() { // idem
 		a.tournerD(180);
 		avancerPlusPrendrePalet(180);
 		a.tournerD(180);
@@ -299,7 +299,7 @@ public class Principal {
 
 	}
 
-	public void RejoindreMilieuApresDébut(){
+	public void RejoindreMilieuApresDébut(){ // idem
 		if (position == 1) {
 			a.tournerD(90);
 			a.avancer(250);
@@ -317,7 +317,7 @@ public class Principal {
 		}
 	}
 
-	public void test1palets1(boolean droite){//quel coté
+	public void test1palets1(boolean droite){//quel coté, ramene le premier palet dans le camp adverse, et s'aligne en direction des palets	
 		if(droite) { //si on veut décaler à droite
 			avancerPlusPrendrePalet(300);
 			seDecalerD();
