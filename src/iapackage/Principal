@@ -103,6 +103,20 @@ public class Principal {
 		System.out.println("false");
 		return false;
 	}
+	public void avancerPlusPrendrePaletAsync(int vitesse) {
+		a.setVitesse(vitesse);
+		a.avancerAsync(2000);
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			pince.ouvrir();
+			if (distance.getDistance()<=0.20) {
+				a.setVitesse(150);
+			}
+			if (touch.estTouche()){
+				a.stop();
+			}
+		}	
+		pince.fermer();
+	}
 
 	public void recherche() {
 		float[] tab = new float[0];
