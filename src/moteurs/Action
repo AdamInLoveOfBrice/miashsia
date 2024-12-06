@@ -43,58 +43,58 @@ public class Action {
 		pilot = new MovePilot(chassis);
 	}
 	
-	public void avancer() {
+	public void avancer() { // avancer jusqu'a un qu'on enchaine par une methode stop
 		pilot.forward();
 	}
-	public void avancer(int speed) {
+	public void avancer(int speed) { // avancer avec une certaine vitesse jusqu'a un stop
 		pilot.setLinearSpeed(speed);
 		pilot.forward();
 	}
-	public void avancerAsync(int distance) {
+	public void avancerAsync(int distance) { // avancer asynchrone d'une certaine distance
 		pilot.travel(distance,true);
 	}
-	public void setVitesse(int v) {
+	public void setVitesse(int v) { // mettre a jour la vitesse
 		pilot.setLinearSpeed(v);
 	}
-	public void avancer(int distance, int speed) {
+	public void avancer(int distance, int speed) { // avancer d'une distance avec une certaine vitesse
 		pilot.setLinearSpeed(speed);
 		pilot.travel(distance);
 		pilot.stop(); 
 	}
 
-	public void ralentir() {
+	public void ralentir() { // mettre la vitesse du robot a 150 
 		pilot.setLinearSpeed(150);
 	}
 
-	public void reculer() {
+	public void reculer() { // le robot recule
 		pilot.backward();
 	}
-	public void reculer(int distance, int speed) {
+	public void reculer(int distance, int speed) { // reculer d'une certaine distance, et d'une certaine vitesse 
 		pilot.setLinearSpeed(speed);
 		pilot.travel(-distance);
 		pilot.stop(); 
 	}
-	public void stop() {
+	public void stop() { // stop le robot pour les fonctions comme avancer() etc
 		pilot.stop();
 	}
-	public void tournerD(int angle) {
+	public void tournerD(int angle) { // tourner d'un certain angle a droite a une vitesse de 100 
 		pilot.setAngularSpeed(100);
 		pilot.rotate(1.033*(double)angle);
 	}
-	public void tournerG(int angle) {
+	public void tournerG(int angle) { // tourner d'un certain angle a gauche a une vitesse de 100 
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle);
 	}
-	public void asyncTournerG(int angle) {
+	public void asyncTournerG(int angle) { // tourner d'un certain angle a gauche a une vitesse de 100 en asynchrone
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle,true);
 	}
 	
-	public MovePilot getPilot() {
+	public MovePilot getPilot() { // retourne le pilot
 		return pilot;
 	}
 	
-	public boolean isMoving() {
+	public boolean isMoving() { // permet de faire des methodes pendant qu'il fait une autre action
 		return pilot.isMoving();
 	}
 }
