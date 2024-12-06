@@ -49,11 +49,11 @@ public class Principal {
 		this.angle=0;
 	}
 
-	public void setPosition(int p) {
+	public void setPosition(int p) { // met a jour la position 
 		position=p;
 	}
 
-	public int getPosition() {
+	public int getPosition() { // retourne la position 
 		return position;
 	}
 
@@ -63,7 +63,7 @@ public class Principal {
 		a.tournerD(ang);
 	}
 
-	public void eviterRobot() {
+	public void eviterRobot() { //  evite le robot par la droite puis se remet a son angle inital une fois evité
 		if (pince.estFermée()&&touch.estTouche()&&distance.getDistance()<270) {
 			float distanceProvisoire=distance.getDistance();
 			Delay.msDelay(100);
@@ -74,7 +74,7 @@ public class Principal {
 		}
 	}
 
-	public void avancerPlusPrendrePalet(int vitesse) {
+	public void avancerPlusPrendrePalet(int vitesse) { // avance jusqu'a qu'il detecte un palet grace a son capteur toucher
 		if (pince.estFermée())
 			pince.ouvrir();
 		a.setVitesse(vitesse);
@@ -88,7 +88,7 @@ public class Principal {
 	public boolean avancerPlusPrendrePalet(int vitesse, int dis) {
 		if (!pince.estOuvert())
 			pince.ouvrir();
-		System.out.println("je dois avancer de " + dis/10 +"cm");
+		System.out.println("je dois avancer de " + dis/10 +"cm"); // test 
 		a.setVitesse(vitesse);
 		a.avancerAsync(dis);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
@@ -103,7 +103,7 @@ public class Principal {
 		System.out.println("false");
 		return false;
 	}
-	public void avancerPlusPrendrePaletAsync(int vitesse) {
+	public void avancerPlusPrendrePaletAsync(int vitesse) { // avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
 		a.setVitesse(vitesse);
 		a.avancerAsync(2000);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
@@ -118,7 +118,7 @@ public class Principal {
 		pince.fermer();
 	}
 
-	public void recherche() {
+	public void recherche() { // recherche un palet, le robot tourne a gauche jusuqu'a qu'il detecte un palet, le robot se dirige vers le palet si son capteur toucher ne detecte rien, il relance recherche 
 		float[] tab = new float[0];
 		int j=0;
 		int t=0;
