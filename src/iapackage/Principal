@@ -360,6 +360,8 @@ public void test3palets1(boolean droite){//quel coté
 		int dMid = 500; //TODO distance pour aller de la ligne blanche au milieu
 		int dCase = 300; //TODO distance pour avancer de pile une case
 		switch (strategie) {
+		case -1:
+			a.stop(); //en gros ne rien faire
 		//si l'autre robot est en face on change de ligne au début volontairement :
 		case 0: //---------------------------------------en face à gauche---------------------------------------
 			a.tournerD(90);
