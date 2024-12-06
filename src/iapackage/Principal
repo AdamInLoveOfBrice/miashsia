@@ -222,7 +222,7 @@ public class Principal {
 		a.stop();
 	}
 
-public void prendrePremierPalaiAsync () {
+	public void prendrePremierPalaiAsync () {
 		a.setVitesse(800);
 		a.avancerAsync(2000);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
@@ -276,7 +276,7 @@ public void prendrePremierPalaiAsync () {
 		}
 	}
 
-		public void test1palets1(boolean droite){//quel coté
+	public void test1palets1(boolean droite){//quel coté
 		if(droite) { //si on veut décaler à droite
 			avancerPlusPrendrePalet(300);
 			seDecalerD();
