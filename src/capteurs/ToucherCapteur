@@ -7,7 +7,7 @@ public class ToucherCapteur extends EV3TouchSensor {
 		super(port);
 	}
 	
-	public boolean estTouche() {
+	public boolean estTouche() { // si le capteur est pressé alors return true 
         float[] sample = new float[1];
         fetchSample(sample, 0);
         if(sample[0]==0) {
