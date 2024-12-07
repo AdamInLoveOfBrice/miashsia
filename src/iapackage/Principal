@@ -240,22 +240,12 @@ public class Principal {
 	}
 
 	public void avancerJusqueLigne() {// avancer jusqu'a des lignes horizontal donc rouge ou jaune ou noir, concretement cela nous fait decaler d'une ligne 
-		avancerJusqueCouleur("blanc");
-		/*a.avancerAsync(300);
+		a.avancerAsync(300);
 		Color rgb = color.getCouleur();
 		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune"|| color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "noir") {
 			rgb = color.getCouleur();
-		}a.stop();*/
+		}a.stop();
 
-	}
-
-	public void ramenerPalet () {
-		recalibrage();
-		while (color.nomCouleur(color.getCouleur())!="BLANC") {
-			eviterRobot();
-			a.avancerAsync(100);
-		}
-		pince.ouvrir();
 	}
 
 	public void prendrePremierPalet() {
