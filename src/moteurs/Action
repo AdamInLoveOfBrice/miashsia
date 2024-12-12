@@ -1,39 +1,23 @@
 package moteurs;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.Motor;
-import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
-import lejos.utility.Delay;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
-import lejos.hardware.BrickFinder;
-import lejos.hardware.lcd.GraphicsLCD;
-import lejos.hardware.motor.BaseRegulatedMotor;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.Motor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.TachoMotorPort;
-import lejos.robotics.Color;
-import lejos.robotics.RegulatedMotor;
-import lejos.robotics.chassis.Wheel;
-import lejos.utility.Delay;
-import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.navigation.MovePilot.*;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
 
 public class Action {
-	
-	private Wheel motorG ;
-	private Wheel motorD ; 
 	private Chassis chassis ; 
 	private MovePilot pilot ;
 	
 	public Action() {
 		this(MotorPort.D,MotorPort.C);
 	}
+	
 	public Action(Port mG, Port mD) {
 		EV3LargeRegulatedMotor m1 = new EV3LargeRegulatedMotor(mG);
 		EV3LargeRegulatedMotor m2 = new EV3LargeRegulatedMotor(mD);
@@ -42,59 +26,83 @@ public class Action {
 		chassis = new WheeledChassis(new Wheel[]{ motorG, motorD }, WheeledChassis.TYPE_DIFFERENTIAL);
 		pilot = new MovePilot(chassis);
 	}
+
+//-------------------------------------------------Motricité---------------------------------------------------
 	
-	public void avancer() { // avancer jusqu'a un qu'on enchaine par une methode stop
+	public void avancer() { // avancer jusqu'a la méthode stop
 		pilot.forward();
 	}
-	public void avancer(int speed) { // avancer avec une certaine vitesse jusqu'a un stop
+	
+	public void avancer(int speed) { // même méthode qu'avant avec une vitesse
 		pilot.setLinearSpeed(speed);
 		pilot.forward();
 	}
-	public void avancerAsync(int distance) { // avancer asynchrone d'une certaine distance
-		pilot.travel(distance,true);
-	}
-	public void setVitesse(int v) { // mettre a jour la vitesse
-		pilot.setLinearSpeed(v);
-	}
-	public void avancer(int distance, int speed) { // avancer d'une distance avec une certaine vitesse
+	
+	public void avancer(int distance, int speed) { // même méthode qu'avant avec une distance
 		pilot.setLinearSpeed(speed);
 		pilot.travel(distance);
 		pilot.stop(); 
 	}
-
-	public void ralentir() { // mettre la vitesse du robot a 150 
-		pilot.setLinearSpeed(150);
+	
+	public void avancerAsync(int distance) { // avancer de manière asynchrone
+		pilot.travel(distance,true);
 	}
-
+	
 	public void reculer() { // le robot recule
 		pilot.backward();
 	}
+	
 	public void reculer(int distance, int speed) { // reculer d'une certaine distance, et d'une certaine vitesse 
 		pilot.setLinearSpeed(speed);
 		pilot.travel(-distance);
 		pilot.stop(); 
 	}
-	public void stop() { // stop le robot pour les fonctions comme avancer() etc
+	
+	public void stop() { // stop les roues du robot
 		pilot.stop();
 	}
-	public void tournerD(int angle) { // tourner d'un certain angle a droite a une vitesse de 100 
+	
+//--------------------------------------------------Rotations----------------------------------------------------
+	
+	public void tournerD(int angle) { // tourner d'un certain angle a droite
 		pilot.setAngularSpeed(100);
 		pilot.rotate(1.033*(double)angle);
 	}
-	public void tournerG(int angle) { // tourner d'un certain angle a gauche a une vitesse de 100 
+	
+	public void tournerG(int angle) { // tourner d'un certain angle a gauche
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle);
 	}
-	public void asyncTournerG(int angle) { // tourner d'un certain angle a gauche a une vitesse de 100 en asynchrone
+	
+	public void asyncTournerD(int angle) { // tourner a droite de manière asynchrone
+		pilot.setAngularSpeed(100);
+		pilot.rotate(1.033*(double)angle,true);
+	}
+	
+	public void asyncTournerG(int angle) { // tourner a gauche de manière asynchrone
 		pilot.setAngularSpeed(100);
 		pilot.rotate(-1.033*(double)angle,true);
 	}
 	
-	public MovePilot getPilot() { // retourne le pilot
-		return pilot;
+	public void seDecalerD() {// tourner a droite, avancer puis tourner a gauche
+		tournerD(45);
+		avancer(300, 300);
+		tournerG(47);
+	}
+
+	public void seDecalerG() {// tourner a gauche, avancer puis tourner a droite
+		tournerG(45);
+		avancer(300, 300);
+		tournerD(47);
 	}
 	
-	public boolean isMoving() { // permet de faire des methodes pendant qu'il fait une autre action
+//--------------------------------------------------Autre----------------------------------------------------
+	
+	public void setVitesse(int v) { // changer la vitesse
+		pilot.setLinearSpeed(v);
+	}
+	
+	public boolean isMoving() { // renvoie true si le robot est en mouvement
 		return pilot.isMoving();
 	}
 }
