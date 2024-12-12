@@ -2,9 +2,8 @@ package capteurs;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
-import lejos.hardware.ev3.LocalEV3;
-import lejos.robotics.SampleProvider;
-import lejos.robotics.filter.MeanFilter;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
 
 public class CouleurCapteur {
 	private Port portCouleur;
@@ -14,19 +13,21 @@ public class CouleurCapteur {
 	public CouleurCapteur(Port port) {
 		portCouleur = port;//Renvoie un objet port pour le nom du port demandé. Cela permet d'accéder au matériel associé au port spécifié.
 		capteurCouleur = new EV3ColorSensor(portCouleur); // relie l'instance crée a l'objet
-		capteurCouleur.setFloodlight(Color.WHITE); //Permet d'allumer ou d'éteindre le projecteur par couleur. Si le capteur possède plusieurs couleurs de lumière, vous pouvez contrôler la couleur qui est allumée ou éteinte. Si la couleur n'existe pas, elle ne fait rien et renvoie false. Vous pouvez éteindre le projecteur en utilisant Color.NONE.
-		capteurCouleur.setCurrentMode("RGB"); //Définit le mode actuel de récupération des échantillons dans notre cas ce sera ROuge vert bleu
+		capteurCouleur.setFloodlight(Color.WHITE); //Permet d'allumer ou d'éteindre le projecteur par couleur.
+		capteurCouleur.setCurrentMode("RGB"); //Définit le mode actuel de récupération des échantillons dans notre cas ce sera en RGB (rouge vert bleu en francais)
 		
 }
 	
-	public static Color getCouleur(){	// recupere le code rgb de la couleur pour la mettre dans un tableau et retourne cette couleur
-		tab = new float[capteurCouleur.sampleSize()]; // créer tab localement
-		capteurCouleur.fetchSample(tab, 0); // fetchsample= recupere les donnés de capteur_couleur et les range dans le tableau tab a partir de la case 0, rouge case 0, vert case 1 et bleu case 2
-		return new Color((int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255)); // retourne la couleur associé au code rvb
+//-----------------------------------------------Méthodes-------------------------------------------------
+
+	public Color getCouleur(){	// recupere le code rgb de la couleur dans un objet "Color"
+		tab = new float[capteurCouleur.sampleSize()]; 
+		capteurCouleur.fetchSample(tab, 0); // récupère les données RGB du capteur couleur
+		return new Color((int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255)); // retourne la couleur associé au code rgb
 		
 	}
 			
-	public static String nomCouleur(int r, int g, int b) {
+	public String nomCouleur(int r, int g, int b) { //renvoie le nom de la couleur en fonction de son codage rgb récupéré avec getCouleur()
 		if((r<8 && g<8 && b<8)) {
 			return "noir";
 		}else if((r>10 && g>10 && b>10) && (r<25 && g<25 && b<25)) {
@@ -45,21 +46,8 @@ public class CouleurCapteur {
 			return "couleur non présente sur le tableau";
 		}
 	}
-	public static String nomCouleur(Color c) {
-		int r = c.getRed();
-		int g = c.getGreen();
-		int b = c.getBlue();
-		if((r<8 && g<8 && b<8)) {
-			return "NOIR";
-		}else if((r>10 && g>10 && b>10) && (r<28 && g<28 && b<28)) {
-			return "GRIS";
-		}else if(r>25 && g>25 && b>25) {
-			return "BLANC";
-		}else {
-			return "autre";
-		}
-	}
-public void fermerCapteurCouleur() {
-		capteurCouleur.close(); 
+	
+	public void fermerCapteurCouleur() {//ferme (éteint) le capteur couleur
+			capteurCouleur.close(); 
 	}
 }
