@@ -273,7 +273,7 @@ public class Principal {
 		}a.stop();
 
 	}
-//------------------------------------------Autres + Getters and Setters--------------------------------------------
+//----------------------------------------------------Autres------------------------------------------------------
 
 	public void eviterRobot() { // permet d'éviter les robots adverses lorsqu'ils sont en face
 		if (!pince.estOuvert()&&touch.estTouche()&&distance.getDistance()<270) {
