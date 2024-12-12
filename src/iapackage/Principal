@@ -1,35 +1,14 @@
 package iapackage;
 
 import moteurs.*;
-import java.util.Arrays;
 
 import capteurs.*;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.Motor;
-import lejos.robotics.RegulatedMotor;
-import lejos.robotics.chassis.Chassis;
-import lejos.robotics.chassis.Wheel;
-import lejos.robotics.chassis.WheeledChassis;
-import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
-import lejos.hardware.BrickFinder;
-import lejos.hardware.lcd.GraphicsLCD;
-import lejos.hardware.motor.BaseRegulatedMotor;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.Motor;
-import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.TachoMotorPort;
 import lejos.robotics.Color;
-import lejos.robotics.RegulatedMotor;
-import lejos.robotics.chassis.Wheel;
-import lejos.utility.Delay;
-import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.navigation.MovePilot.*;
-import lejos.robotics.SampleProvider;
 
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
 
 public class Principal {
 	private static Action a;
@@ -37,7 +16,6 @@ public class Principal {
 	private static Pince pince;
 	private static DistanceCapteur distance;
 	private static CouleurCapteur color;
-	private int position; // = 1 si à gauche, 2 si au milieu, 3 si a droite
 	private int angle; //représente l'angle vers lequel le robot est tourné
 
 	public Principal(Action action, Pince pince, ToucherCapteur t, DistanceCapteur d,CouleurCapteur c) {
@@ -49,101 +27,95 @@ public class Principal {
 		this.angle=0;
 	}
 
-	public void setPosition(int p) {// met a jour la position
-		position=p;
-	}
-
-	public int getPosition() {// retourne la position 
-		return position;
-	}
-
-	public void recalibrage() {
-		int ang= angle%360;
-		this.angle=0;
-		a.tournerD(ang);
-	}
-
-	public void eviterRobot() { //  evite le robot par la droite puis se remet a son angle inital une fois evité
-		if (!pince.estOuvert()&&touch.estTouche()&&distance.getDistance()<270) {
-			float distanceProvisoire=distance.getDistance();
-			Delay.msDelay(100);
-			if(distance.getDistance()<distanceProvisoire-5)
-				a.tournerD(100);
-			a.avancer(150,100);
-			a.tournerG(100);
+//-----------------------------------------------Début du jeu-------------------------------------------------
+	
+	public void case345(boolean droite){//code adapté aux stratégies 3,4 et 5
+		if(droite) { //si on veut décaler à droite
+			pince.ouvrir();
+			avancerPlusPrendrePaletAsync(300);
+			a.seDecalerD();
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			a.tournerG(90);
+			avancerJusqueLigne();
+			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
+			avancerJusqueLigne();
+			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
+			a.tournerG(90);
+		}else {
+			pince.ouvrir();
+			avancerPlusPrendrePaletAsync(300);
+			a.seDecalerG();
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			a.tournerD(90);
+			avancerJusqueLigne();
+			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
+			avancerJusqueLigne();
+			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
+			a.tournerD(90);
 		}
 	}
 
-	public void avancerPlusPrendrePaletAsync(int vitesse) {// avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
-		a.setVitesse(vitesse);
-		a.avancerAsync(2000);
-		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
-			Color rgb = color.getCouleur();
-			if (distance.getDistance()<=0.20) {
-				a.setVitesse(150);
-			}
-			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
-				a.stop();
-			}
-		}	
-		pince.fermer();
-	}
-
-	public void avancerPlusPrendrePaletAsyncEtOuvre(int vitesse) {// avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
-		a.setVitesse(vitesse);
-		a.avancerAsync(2000);
-		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+	public void test3palets1(boolean droite){//récupère les trois palets de la ligne en face du robot
+		if(droite) {//si on veut passer par la droite
 			pince.ouvrir();
-			Color rgb = color.getCouleur();
-			if (distance.getDistance()<=0.20) {
-				a.setVitesse(150);
-			}
-			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
-				a.stop();
-			}
-		}	
-		pince.fermer();
-	}
-
-	public void avancerPlusPrendrePalet(int vitesse) {// avance jusqu'a qu'il detecte un palet grace a son capteur toucher
-		if (!pince.estOuvert())
+			avancerPlusPrendrePaletAsync(100);
+			a.seDecalerD();
+			avancerJusqueCouleur("blanc");
 			pince.ouvrir();
-		a.setVitesse(vitesse);
-		a.avancer();
-		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
+			a.reculer(100, 300);
+			a.tournerG(90);
+			avancerJusqueLigne();
+			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
+			a.tournerG(90);
+			avancerPlusPrendrePaletAsync(300);
+			a.tournerG(180);
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			a.tournerG(180);
+			avancerPlusPrendrePaletAsync(300);
+			a.tournerG(180);
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			pince.fermer();	
+		}else {//si on veut passer par la gauche
+			pince.ouvrir();
+			avancerPlusPrendrePaletAsync(300);
+			a.seDecalerG();
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			a.tournerD(90);
+			avancerJusqueLigne();
+			a.avancer(100, 200);
+			a.tournerD(90);
+			avancerPlusPrendrePaletAsync(300);
+			a.tournerG(180);
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			a.tournerG(180);
+			avancerPlusPrendrePaletAsync(300);
+			a.tournerG(180);
+			avancerJusqueCouleur("blanc");
+			pince.ouvrir();
+			a.reculer(100, 300);
+			pince.fermer();		
 		}
-		a.stop();
-		pince.fermer();
 	}
 
-	public boolean avancerPlusPrendrePalet(int vitesse, int dis) {
-		if (!pince.estOuvert())
-			pince.ouvrir();
-		System.out.println("je dois avancer de " + dis/10 +"cm");
-		a.setVitesse(vitesse);
-		a.avancerAsync(dis);
-		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
-			if(touch.estTouche()) {
-				a.stop();
-				pince.fermer();
-				System.out.println("true");
-				return true;
-			}
-		}
-		pince.fermer();
-		System.out.println("false");
-		return false;
-	}
-
-	public static double tempsVersAngle(long t) {
-		System.out.println(-1.95*(long)Math.pow(10, -6)*t*t+0.0906*t-58.36);
-		return (-1.95*(long)Math.pow(10, -6)*t*t+0.0906*t-58.36);
-	}
-	public void recherche() { // recherche un palet, le robot tourne a gauche jusuqu'a qu'il detecte un palet, le robot se dirige vers le palet si son capteur toucher ne detecte rien, il relance recherche 
+//-----------------------------------------------Méthode recherche-------------------------------------------------
+	
+	public void recherche() { // permet de se tourner vers le palet le plus proche et d'aller le récupérer 
 		float[] tab = new float[0];
 		int j=0;
 		int t=0;
-		boolean b = true;
+		boolean b;//TODO peut etre enlever
 		float min = (float)0.80;
 		long start = System.currentTimeMillis();
 		a.asyncTournerG(360);
@@ -151,15 +123,11 @@ public class Principal {
 			tab=distance.recherche(tab);
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]+0.1<min){
 				j=tab.length-1;
-				System.out.println("index debut = " + j + " , valeur = " +tab[j]);
 			}
 			if(tab[tab.length-1]!=0 && tab[tab.length-1]<min) {
 				min=tab[tab.length-1];
 			}if((tab.length>1) && (j!=0) && (tab[tab.length-1]!=0) && (tab[tab.length-2]-0.1<min) && (tab[tab.length-1]-0.1>min) ){
 				t=tab.length-1;
-				System.out.println("index fin = " + t + " , valeur = " +tab[t]);
-				System.out.println(t-j);
-				System.out.println("min = " + min);
 				if (min>0.15 && min<0.35 && (t-j)<300 && (t-j)>10) {
 					a.stop();
 					long end = System.currentTimeMillis();
@@ -209,27 +177,85 @@ public class Principal {
 				j=0;
 				t=0;
 			}
-		}System.out.println(tab.length);	
-		//if(b) {
-		//this.recherche();
-		//}
-		//System.out.println(Arrays.toString(tab));
+		}	
 	}
-	public void seDecalerD() {// tourner a droite, avancer puis tourner a gauche
-		a.tournerD(45);
-		a.avancer(300, 300);
-		a.tournerG(47);
+	
+	public static double tempsVersAngle(long t) { // renvoie l'angle associé au temps de rotation (avec une fonction polynome)
+		return (-1.95*(long)Math.pow(10, -6)*t*t+0.0906*t-58.36);
+	}
+	
+	public void recalibrage() { //permet de se recalibrer vers le but adverse après une méthode "recherche"
+		int ang= angle%360;
+		this.angle=0;
+		a.tournerD(ang);
+	}
+	
+//------------------------------------------AvancerPlusPrendrePalet--------------------------------------------
+
+	public void avancerPlusPrendrePalet(int vitesse) {// avance jusqu'a qu'il detecte un palet grace a son capteur toucher
+		if (!pince.estOuvert())
+			pince.ouvrir();
+		a.setVitesse(vitesse);
+		a.avancer();
+		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
+		}
+		a.stop();
+		pince.fermer();
+	}
+	
+	public boolean avancerPlusPrendrePalet(int vitesse, int dis) {
+		if (!pince.estOuvert())
+			pince.ouvrir();
+		System.out.println("je dois avancer de " + dis/10 +"cm");
+		a.setVitesse(vitesse);
+		a.avancerAsync(dis);
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			if(touch.estTouche()) {
+				a.stop();
+				pince.fermer();
+				System.out.println("true");
+				return true;
+			}
+		}
+		pince.fermer();
+		System.out.println("false");
+		return false;
+	}
+	
+	public void avancerPlusPrendrePaletAsync(int vitesse) {// avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
+		a.setVitesse(vitesse);
+		a.avancerAsync(2000);
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			Color rgb = color.getCouleur();
+			if (distance.getDistance()<=0.20) {
+				a.setVitesse(150);
+			}
+			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
+				a.stop();
+			}
+		}	
+		pince.fermer();
 	}
 
-	public void seDecalerG() {// tourner a gauche, avancer puis tourner a droite
-
-		a.tournerG(45);
-		a.avancer(300, 300);
-		a.tournerD(47);
+	public void avancerPlusPrendrePaletAsyncEtOuvre(int vitesse) {// avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
+		a.setVitesse(vitesse);
+		a.avancerAsync(2000);
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			pince.ouvrir();
+			Color rgb = color.getCouleur();
+			if (distance.getDistance()<=0.20) {
+				a.setVitesse(150);
+			}
+			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
+				a.stop();
+			}
+		}	
+		pince.fermer();
 	}
 
+//------------------------------------------Avancer jusqu'à une couleur--------------------------------------------
 
-	public void avancerJusqueCouleur(String c) {// avancer jusqu'a qu'il detecte la couleur en parametre ( couleur en miniscule)
+	public void avancerJusqueCouleur(String c) {// avance jusqu'à la détéction de la couleur en paramètre
 		a.setVitesse(300);
 		Color rgb = color.getCouleur();
 		a.avancer();
@@ -239,7 +265,7 @@ public class Principal {
 
 	}
 
-	public void avancerJusqueLigne() {// avancer jusqu'a des lignes horizontal donc rouge ou jaune ou noir, concretement cela nous fait decaler d'une ligne 
+	public void avancerJusqueLigne() {// avance jusqu'a une ligne noire, rouge ou jaune (pour se décaler d'une case)
 		a.avancerAsync(300);
 		Color rgb = color.getCouleur();
 		while(color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "rouge" || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "jaune"|| color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "noir") {
@@ -247,165 +273,31 @@ public class Principal {
 		}a.stop();
 
 	}
+//------------------------------------------Autres + Getters and Setters--------------------------------------------
 
-	public void prendrePremierPalet() {
-		a.setVitesse(350);
-		avancerPlusPrendrePalet(180);
-		a.tournerD(45);
-		a.avancer(450);
-		a.tournerG(45);
-		a.avancer();
-		while(color.nomCouleur(color.getCouleur())!="BLANC") {
-			eviterRobot();
-		}
-		a.tournerG(45);
-		a.avancerAsync(500);
-		a.tournerD(45);
-		a.stop();
-	}
-
-	public void prendrePremierPaletAsync () {
-		a.setVitesse(350);
-		if (!pince.estOuvert())
-			pince.ouvrir();
-		a.setVitesse(200);
-		a.avancerAsync(2000);
-		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
-		}	
-		pince.fermer();
-		a.tournerD(45);
-		a.avancer(450);
-		a.tournerG(45);
-		while(color.nomCouleur(color.getCouleur())!="BLANC") {
-			eviterRobot();
-		}
-		a.tournerG(45);
-		a.avancerAsync(500);
-		a.tournerD(45);
-		a.stop();
-	}
-
-	public void ramenerDeuxPalets() { //plus utilisée après changement dans le main
-		a.tournerD(180);
-		avancerPlusPrendrePalet(180);
-		a.tournerD(180);
-		a.avancer(600,3000);
-		pince.ouvrir();
-		avancerPlusPrendrePalet(180);
-		a.tournerD(180);
-		a.avancer(1200,3000);
-		pince.ouvrir();
-		a.tournerD(180);
-
-	}
-
-	public void RejoindreMilieuApresDébut(){//plus utilisée après changement dans le main
-		if (position == 1) {
-			a.tournerD(90);
-			a.avancer(250);
-			a.tournerG(90);
-			a.avancer(900);
-		}
-		if (position == 2) {
-			a.avancer(900);
-		}
-		else {
-			a.tournerG(90);
-			a.avancer(250);
-			a.tournerD(90);
-			a.avancer(900);
+	public void eviterRobot() { // permet d'éviter les robots adverses lorsqu'ils sont en face
+		if (!pince.estOuvert()&&touch.estTouche()&&distance.getDistance()<270) {
+			float distanceProvisoire=distance.getDistance();
+			Delay.msDelay(100);
+			if(distance.getDistance()<distanceProvisoire-5)
+				a.tournerD(100);
+			a.avancer(150,100);
+			a.tournerG(100);
 		}
 	}
-
-	public void case345(boolean droite){//quel coté, ramène le premier palet dans le camp adverse, et s'aligne en direction des palets	
-		if(droite) { //si on veut décaler à droite
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
-			seDecalerD();
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerG(90);
-			avancerJusqueLigne();
-			a.avancer(100, 200);//on réavance bien sur la ligne
-			avancerJusqueLigne();
-			a.avancer(100, 200);//on réavance bien sur la ligne
-			a.tournerG(90);
-		}else {
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
-			seDecalerG();
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerD(90);
-			avancerJusqueLigne();
-			a.avancer(100, 200);//on réavance bien sur la ligne
-			avancerJusqueLigne();
-			a.avancer(100, 200);//on réavance bien sur la ligne
-			a.tournerD(90);
-		}
-	}
-
-	public void test3palets1(boolean droite){//quel coté
-		if(droite) { //si on veut décaler à droite
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(100);
-			seDecalerD();
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerG(90);
-			avancerJusqueLigne();
-			a.avancer(100, 200);
-			a.tournerG(90);
-			avancerPlusPrendrePaletAsync(300);
-			a.tournerG(180);
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerG(180);
-			avancerPlusPrendrePaletAsync(300);
-			a.tournerG(180);
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			pince.fermer();	
-		}else {
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
-			seDecalerG();
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerD(90);
-			avancerJusqueLigne();
-			a.avancer(100, 200);
-			a.tournerD(90);
-			avancerPlusPrendrePaletAsync(300);
-			a.tournerG(180);
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			a.tournerG(180);
-			avancerPlusPrendrePaletAsync(300);
-			a.tournerG(180);
-			avancerJusqueCouleur("blanc");
-			pince.ouvrir();
-			a.reculer(100, 300);
-			pince.fermer();		
-		}
-	}
+	
+//----------------------------------------------------Main------------------------------------------------------
 
 	public static void main(String[] args) {
-		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4),new CouleurCapteur(SensorPort.S1));
-		int strategie = 6;
-		int dMid = 500; //TODO distance pour aller de la ligne blanche au milieu
+		Principal p = new Principal(new Action(MotorPort.D,MotorPort.C),new Pince(MotorPort.A),new ToucherCapteur(SensorPort.S3),new DistanceCapteur(SensorPort.S4),new CouleurCapteur(SensorPort.S1));//initialisation des capteurs et des moteurs
+		int strategie = 6;//choix de la stratégie
+		int dMid = 500; //distance pour retourner au milieu. Augmenter si l'on souhaite que le robot aille plus loin
 		switch (strategie) {
-		case 9 :
-			pince.fermerObligatoirement();
-			a.avancer(700);
+		case 9 ://pour lancer un code normal sans lancer toute une stratégie
+			//pince.fermerObligatoirement();
+			//a.avancer(700);
 			break;
+		//case 0, 1, 2 : si le robot adverse veut être en face on se décale d'une ligne pour prendre nos 3 palets
 		case 0: //---------------------------------------en face à gauche---------------------------------------
 			a.avancer(100);
 			a.tournerD(90);
@@ -464,7 +356,7 @@ public class Principal {
 				a.avancer(dMid);
 			}
 			break;
-			//on leur vole leur palet du milieu :
+		//case 3, 4, 5 : On prend notre premier palet puis on change de ligne pour en voler un à l'adversaire.
 		case 3: //---------------------------------vol s'ils se mettent à gauche---------------------------------
 			//se mettre au milieu
 			p.case345(true);
@@ -538,7 +430,7 @@ public class Principal {
 				a.avancer(dMid);
 			}
 			break;
-			//normal :
+		//case 6, 7, 8 : prendre les trois palets de notre ligne
 		case 6: //-----------------------------------------normal à droite-----------------------------------------
 			p.test3palets1(true);
 			a.tournerG(90);
