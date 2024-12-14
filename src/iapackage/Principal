@@ -440,7 +440,7 @@ public class Principal {
 				a.avancer(dMid);
 			}
 			break;
-		case 8: //-----------------------------------------normal à milieu-----------------------------------------
+		case 8: //-----------------------------------------normal au milieu-----------------------------------------
 			p.test3palets1(true);
 			a.tournerG(180);
 			a.avancer(dMid);
