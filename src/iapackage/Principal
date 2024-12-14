@@ -292,6 +292,7 @@ public class Principal {
 			}
 			break;
 		case 1: //---------------------------------------en face à droite---------------------------------------
+			a.avancer(100);
 			a.tournerG(90);
 			p.avancerJusqueLigne();
 			a.avancer(100, 200);
@@ -311,6 +312,7 @@ public class Principal {
 			}
 			break;
 		case 2: //---------------------------------------en face au milieu---------------------------------------
+			a.avancer(100);
 			a.tournerG(90);
 			p.avancerJusqueLigne();
 			a.avancer(100, 200);
