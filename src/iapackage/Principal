@@ -191,17 +191,6 @@ public class Principal {
 	}
 	
 //------------------------------------------AvancerPlusPrendrePalet--------------------------------------------
-
-	public void avancerPlusPrendrePalet(int vitesse) {// avance jusqu'a qu'il detecte un palet grace a son capteur toucher
-		if (!pince.estOuvert())
-			pince.ouvrir();
-		a.setVitesse(vitesse);
-		a.avancer();
-		while(!touch.estTouche()) { //s'arrête que quand le capteur touche le palet
-		}
-		a.stop();
-		pince.fermer();
-	}
 	
 	public boolean avancerPlusPrendrePalet(int vitesse, int dis) {
 		if (!pince.estOuvert())
@@ -226,22 +215,6 @@ public class Principal {
 		a.setVitesse(vitesse);
 		a.avancerAsync(2000);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
-			Color rgb = color.getCouleur();
-			if (distance.getDistance()<=0.20) {
-				a.setVitesse(150);
-			}
-			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
-				a.stop();
-			}
-		}	
-		pince.fermer();
-	}
-
-	public void avancerPlusPrendrePaletAsyncEtOuvre(int vitesse) {// avancer jusuqu'au palet de maniere asynchrone puis ferme les pinces
-		a.setVitesse(vitesse);
-		a.avancerAsync(2000);
-		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
-			pince.ouvrir();
 			Color rgb = color.getCouleur();
 			if (distance.getDistance()<=0.20) {
 				a.setVitesse(150);
