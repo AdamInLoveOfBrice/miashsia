@@ -189,21 +189,17 @@ public class Principal {
 //------------------------------------------AvancerPlusPrendrePalet--------------------------------------------
 	
 	public boolean avancerPlusPrendrePalet(int vitesse, int dis) {
-		if (!pince.estOuvert())
-			pince.ouvrir();
-		System.out.println("je dois avancer de " + dis/10 +"cm");
 		a.setVitesse(vitesse);
 		a.avancerAsync(dis);
 		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			pince.ouvrir();
 			if(touch.estTouche()) {
 				a.stop();
 				pince.fermer();
-				System.out.println("true");
 				return true;
 			}
 		}
 		pince.fermer();
-		System.out.println("false");
 		return false;
 	}
 	
