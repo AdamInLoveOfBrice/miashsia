@@ -29,10 +29,9 @@ public class Principal {
 
 //-----------------------------------------------Début du jeu-------------------------------------------------
 	
-	public void case345(boolean droite){//code adapté aux stratégies 3,4 et 5
-		if(droite) { //si on veut décaler à droite
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
+	public void case345(boolean droite) {
+    	if(droite) { //si on veut décaler à droite
+    		avancerPlusPrendrePaletAsyncEtOuvre(300);
 			a.seDecalerD();
 			avancerJusqueCouleur("blanc");
 			pince.ouvrir();
@@ -44,8 +43,7 @@ public class Principal {
 			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
 			a.tournerG(90);
 		}else {
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
+			avancerPlusPrendrePaletAsyncEtOuvre(300);
 			a.seDecalerG();
 			avancerJusqueCouleur("blanc");
 			pince.ouvrir();
@@ -57,12 +55,11 @@ public class Principal {
 			a.avancer(100, 200);//réavancer pour que le centre de notre robot soit sur la ligne, et pas le capteur couleur
 			a.tournerD(90);
 		}
-	}
+    }
 
-	public void test3palets1(boolean droite){//récupère les trois palets de la ligne en face du robot
-		if(droite) {//si on veut passer par la droite
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(100);
+	public void test3palets1(boolean droite) {
+    	if(droite) {//si on veut passer par la droite
+    		avancerPlusPrendrePaletAsyncEtOuvre(300);
 			a.seDecalerD();
 			avancerJusqueCouleur("blanc");
 			pince.ouvrir();
@@ -84,8 +81,7 @@ public class Principal {
 			a.reculer(100, 300);
 			pince.fermer();	
 		}else {//si on veut passer par la gauche
-			pince.ouvrir();
-			avancerPlusPrendrePaletAsync(300);
+			avancerPlusPrendrePaletAsyncEtOuvre(300);
 			a.seDecalerG();
 			avancerJusqueCouleur("blanc");
 			pince.ouvrir();
@@ -107,7 +103,7 @@ public class Principal {
 			a.reculer(100, 300);
 			pince.fermer();		
 		}
-	}
+    }
 
 //-----------------------------------------------Méthode recherche-------------------------------------------------
 	
@@ -225,6 +221,22 @@ public class Principal {
 		}	
 		pince.fermer();
 	}
+
+ public void avancerPlusPrendrePaletAsyncEtOuvre(int vitesse) {
+    	a.setVitesse(vitesse);
+		a.avancerAsync(2000);
+		while(a.isMoving()) { //s'arrête que quand le capteur touche le palet
+			pince.ouvrir();
+			Color rgb = color.getCouleur();
+			if (distance.getDistance()<=0.20) {
+				a.setVitesse(150);
+			}
+			if (touch.estTouche() || color.nomCouleur(rgb.getRed(), rgb.getGreen(), rgb.getBlue())=="blanc"){
+				a.stop();
+			}
+		}	
+		pince.fermer();
+    }
 
 //------------------------------------------Avancer jusqu'à une couleur--------------------------------------------
 
