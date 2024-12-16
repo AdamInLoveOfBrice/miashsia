@@ -1,0 +1,14 @@
+Voici un guide succin pour savoir comment sont organisés les documents demandés :
+
+Un premier dossier "Documents
+Version1: Les documents placés dans le dossier “Version1” ne sont là que pour servir de comparaison aux documents finaux et montrer la progression du groupe.
+  I. Cahier des charges
+  II. Process
+  III. Plan de développement
+
+VersionFinale : Les documents placés dans le dossier "VersionFinale" sont les documents définitifs du groupe et donc ceux témoignants du travail final du groupe
+  I. Cahier des charges
+  II. Plan de développement
+  III. Plan de test
+  IV. Process
+  V.Rapport
