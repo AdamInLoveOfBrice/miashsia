@@ -1,0 +1,96 @@
+package capteurs;
+
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.Color;
+
+/**
+ * La classe <code>CouleurCapteur</code> permet d'interfacer un capteur de couleur EV3
+ * pour récupérer et identifier les couleurs sous forme de codes RGB (Rouge, Vert, Bleu).
+ * Elle offre des fonctionnalités pour lire la couleur détectée, déterminer son nom
+ * basé sur des seuils RGB et fermer le capteur.
+ * 
+ * @author MIASHS Kermit Team
+ */
+public class CouleurCapteur {
+    
+    /**
+     * Le port auquel le capteur de couleur est connecté sur le robot EV3.
+     */
+    private Port portCouleur;
+    
+    /**
+     * L'instance du capteur de couleur EV3.
+     */
+    private static EV3ColorSensor capteurCouleur;
+    
+    /**
+     * Un tableau pour stocker les échantillons RGB récupérés du capteur.
+     */
+    public static float[] tab; 
+
+    /**
+     * Constructeur de la classe <code>CouleurCapteur</code>.
+     * Initialise le capteur de couleur sur le port spécifié et configure les
+     * paramètres de fonctionnement du capteur.
+     * 
+     * @param port Le port du robot auquel le capteur de couleur est connecté.
+     */
+    public CouleurCapteur(Port port) {
+        portCouleur = port;  // Initialisation du port de connexion
+        capteurCouleur = new EV3ColorSensor(portCouleur);  // Création de l'objet capteur de couleur
+        capteurCouleur.setFloodlight(Color.WHITE);  // Allumage du projecteur pour améliorer la détection
+        capteurCouleur.setCurrentMode("RGB");  // Définition du mode de récupération des échantillons (RGB)
+    }
+
+    /**
+     * Récupère la couleur détectée par le capteur sous forme d'un objet <code>Color</code>.
+     * Cette méthode effectue une lecture des échantillons RGB et les convertit en un
+     * objet <code>Color</code> à partir des valeurs RGB.
+     * 
+     * @return Un objet <code>Color</code> représentant la couleur détectée par le capteur.
+     */
+    public Color getCouleur() {
+        tab = new float[capteurCouleur.sampleSize()];  // Initialisation du tableau pour stocker les échantillons
+        capteurCouleur.fetchSample(tab, 0);  // Récupération des données RGB du capteur
+        return new Color((int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));  // Création et retour de l'objet Color
+    }
+
+    /**
+     * Détermine le nom de la couleur en fonction des valeurs RGB données.
+     * Cette méthode compare les valeurs RGB avec des seuils prédéfinis pour
+     * identifier des couleurs comme le noir, gris, blanc, rouge, vert, bleu, etc.
+     * 
+     * @param r La valeur du composant rouge (0-255).
+     * @param g La valeur du composant vert (0-255).
+     * @param b La valeur du composant bleu (0-255).
+     * @return Le nom de la couleur en fonction des valeurs RGB.
+     */
+    public String nomCouleur(int r, int g, int b) {
+        if((r < 8 && g < 8 && b < 8)) {
+            return "noir";
+        } else if((r > 10 && g > 10 && b > 10) && (r < 25 && g < 25 && b < 25)) {
+            return "gris";
+        } else if(r > 25 && g > 25 && b > 25) {
+            return "blanc";
+        } else if((r > 30 && g > 20 && b < 10)) {
+            return "jaune";
+        } else if(r > b && r > g) {
+            return "rouge";
+        } else if(g > b && g > r) {
+            return "vert";
+        } else if(b > g && b > r) {
+            return "bleu";
+        } else {
+            return "couleur non présente sur le tableau";  // Si aucune couleur n'est trouvée
+        }
+    }
+
+    /**
+     * Ferme le capteur de couleur, libérant les ressources associées.
+     * Cette méthode est appelée pour éteindre le capteur et économiser de l'énergie.
+     */
+    public void fermerCapteurCouleur() {
+        capteurCouleur.close();  // Fermeture du capteur pour libérer les ressources
+    }
+}
