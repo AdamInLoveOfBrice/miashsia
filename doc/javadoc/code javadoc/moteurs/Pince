@@ -1,0 +1,84 @@
+package moteurs;
+
+import lejos.hardware.motor.MindsensorsGlideWheelMRegulatedMotor;
+import lejos.hardware.port.Port;
+import lejos.robotics.RegulatedMotor;
+
+/**
+ * La classe <code>Pince</code> permet de contrôler les pinces d'un robot en utilisant un moteur régulé.
+ * Elle fournit des méthodes pour ouvrir et fermer les pinces, ainsi qu'un mécanisme de vérification de leur état.
+ * 
+ * <p>Cette classe utilise un moteur régulé connecté à un port spécifié pour actionner les pinces et 
+ * offre des méthodes pour gérer leur état (ouvert ou fermé).</p>
+ * 
+ * @author MIASHS Kermit Team
+ */
+public class Pince {
+
+    private RegulatedMotor pinces;
+    private boolean ouvert;
+
+    /**
+     * Constructeur de la classe <code>Pince</code>.
+     * 
+     * <p>Initialise un moteur régulé pour contrôler les pinces, spécifié par le port du moteur.</p>
+     * 
+     * @param pincesPort Le port auquel le moteur des pinces est connecté.
+     */
+    public Pince(Port pincesPort) {
+        pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
+        ouvert = false;  // Initialement, les pinces sont fermées
+    }
+
+    //-------------------------------------------------Méthodes---------------------------------------------------
+
+    /**
+     * Ouvre les pinces et met à jour l'état interne pour indiquer que les pinces sont ouvertes.
+     * Si les pinces sont déjà ouvertes, cette méthode ne fera rien.
+     */
+    public void ouvrir() {
+        if (!this.estOuvert()) {
+            this.pinces.rotate(1000); // Fait tourner le moteur pour ouvrir les pinces
+        }
+        this.ouvert = true; // Marque les pinces comme ouvertes
+    }
+
+    /**
+     * Ferme les pinces et met à jour l'état interne pour indiquer que les pinces sont fermées.
+     * Si les pinces sont déjà fermées, cette méthode ne fera rien.
+     */
+    public void fermer() {
+        if (this.estOuvert()) {
+            pinces.rotate(-1000); // Fait tourner le moteur pour fermer les pinces
+        }
+        this.ouvert = false; // Marque les pinces comme fermées
+    }
+
+    /**
+     * Ferme les pinces de manière forcée, indépendamment de l'état actuel des pinces.
+     * Cette méthode est utile en cas de problème avec l'état interne des pinces.
+     */
+    public void fermerObligatoirement() {
+        pinces.setSpeed(800); // Définit la vitesse du moteur
+        pinces.rotate(-1000); // Fait tourner le moteur pour fermer les pinces
+        this.ouvert = false; // Marque les pinces comme fermées
+    }
+
+    /**
+     * Définit l'état des pinces comme étant ouvert ou fermé.
+     * 
+     * @param b Si <code>true</code>, les pinces sont marquées comme ouvertes, sinon elles sont fermées.
+     */
+    public void setOuvert(boolean b) {
+        ouvert = b;
+    }
+
+    /**
+     * Vérifie si les pinces sont actuellement ouvertes.
+     * 
+     * @return <code>true</code> si les pinces sont ouvertes, <code>false</code> sinon.
+     */
+    public boolean estOuvert() {
+        return this.ouvert;
+    }
+}
