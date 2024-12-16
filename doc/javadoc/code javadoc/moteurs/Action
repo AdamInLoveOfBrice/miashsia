@@ -1,0 +1,213 @@
+package moteurs;
+
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+
+/**
+ * La classe <code>Action</code> permet de contrôler les mouvements d'un robot en utilisant des moteurs
+ * et un pilote de mouvement. Elle offre des méthodes pour avancer, reculer, tourner, ainsi que pour
+ * ajuster la vitesse et vérifier si le robot est en mouvement. La classe supporte également des mouvements
+ * asynchrones.
+ * 
+ * <p>Elle utilise les moteurs connectés aux ports spécifiés et permet de piloter un robot en utilisant un
+ * châssis à roues différentielles.</p>
+ * 
+ * @author MIASHS Kermit Team
+ */
+public class Action {
+    
+	/** Le châssis du robot, utilisé pour modéliser le robot avec ses roues. */
+    private Chassis chassis; 
+
+    /** Le pilote du robot, utilisé pour contrôler le mouvement du robot en fonction du châssis. */
+    private MovePilot pilot;
+
+    /**
+     * Constructeur de la classe <code>Action</code> qui utilise les ports moteurs par défaut pour les moteurs
+     * gauche et droit (MotorPort.D et MotorPort.C).
+     * 
+     * Ce constructeur crée un robot avec un châssis et un pilote de mouvement utilisant les moteurs
+     * connectés aux ports spécifiés par défaut.
+     */
+    public Action() {
+        this(MotorPort.D, MotorPort.C);
+    }
+
+    /**
+     * Constructeur de la classe <code>Action</code> qui permet de spécifier les ports des moteurs.
+     * 
+     * <p>Ce constructeur crée un robot avec un châssis et un pilote de mouvement en utilisant les moteurs
+     * connectés aux ports spécifiés pour les moteurs gauche et droit.</p>
+     * 
+     * @param mG Le port du moteur gauche.
+     * @param mD Le port du moteur droit.
+     */
+    public Action(Port mG, Port mD) {
+        EV3LargeRegulatedMotor m1 = new EV3LargeRegulatedMotor(mG);
+        EV3LargeRegulatedMotor m2 = new EV3LargeRegulatedMotor(mD);
+        Wheel motorG = WheeledChassis.modelWheel(m1, 56).offset(-60);
+        Wheel motorD = WheeledChassis.modelWheel(m2, 56).offset(60);
+        chassis = new WheeledChassis(new Wheel[]{ motorG, motorD }, WheeledChassis.TYPE_DIFFERENTIAL);
+        pilot = new MovePilot(chassis);
+    }
+
+    //-------------------------------------------------Motricité---------------------------------------------------
+
+    /**
+     * Fait avancer le robot jusqu'à ce que la méthode <code>stop()</code> soit appelée.
+     * Le robot avance à la vitesse par défaut du MovePilot.
+     */
+    public void avancer() {
+        pilot.forward();
+    }
+
+    /**
+     * Fait avancer le robot à la vitesse spécifiée.
+     * 
+     * @param speed La vitesse à laquelle le robot doit avancer, exprimée en unités de vitesse linéaire.
+     */
+    public void avancer(int speed) {
+        pilot.setLinearSpeed(speed);
+        pilot.forward();
+    }
+
+    /**
+     * Fait avancer le robot d'une distance spécifiée à une vitesse donnée.
+     * Une fois la distance parcourue, le robot s'arrête automatiquement.
+     * 
+     * @param distance La distance à parcourir en centimètres.
+     * @param speed La vitesse à laquelle le robot doit avancer, exprimée en unités de vitesse linéaire.
+     */
+    public void avancer(int distance, int speed) {
+        pilot.setLinearSpeed(speed);
+        pilot.travel(distance);
+        pilot.stop(); 
+    }
+
+    /**
+     * Fait avancer le robot de manière asynchrone d'une distance spécifiée.
+     * Le robot continue son exécution sans être bloqué par cette opération.
+     * 
+     * @param distance La distance à parcourir en centimètres.
+     */
+    public void avancerAsync(int distance) {
+        pilot.travel(distance, true);
+    }
+
+    /**
+     * Fait reculer le robot.
+     * Le robot recule indéfiniment jusqu'à ce que la méthode <code>stop()</code> soit appelée.
+     */
+    public void reculer() {
+        pilot.backward();
+    }
+
+    /**
+     * Fait reculer le robot d'une distance spécifiée à une vitesse donnée.
+     * Une fois la distance parcourue, le robot s'arrête automatiquement.
+     * 
+     * @param distance La distance à parcourir en centimètres.
+     * @param speed La vitesse à laquelle le robot doit reculer, exprimée en unités de vitesse linéaire.
+     */
+    public void reculer(int distance, int speed) {
+        pilot.setLinearSpeed(speed);
+        pilot.travel(-distance);
+        pilot.stop(); 
+    }
+
+    /**
+     * Arrête le robot en arrêtant tous les moteurs du châssis.
+     */
+    public void stop() {
+        pilot.stop();
+    }
+
+    //--------------------------------------------------Rotations----------------------------------------------------
+
+    /**
+     * Tourne le robot d'un certain angle vers la droite.
+     * 
+     * @param angle L'angle en degrés pour effectuer la rotation vers la droite.
+     */
+    public void tournerD(int angle) {
+        pilot.setAngularSpeed(100);
+        pilot.rotate(1.033 * (double) angle);
+    }
+
+    /**
+     * Tourne le robot d'un certain angle vers la gauche.
+     * 
+     * @param angle L'angle en degrés pour effectuer la rotation vers la gauche.
+     */
+    public void tournerG(int angle) {
+        pilot.setAngularSpeed(100);
+        pilot.rotate(-1.033 * (double) angle);
+    }
+
+    /**
+     * Tourne le robot vers la droite de manière asynchrone d'un certain angle.
+     * Le robot continue son exécution sans être bloqué par cette opération.
+     * 
+     * @param angle L'angle en degrés pour effectuer la rotation vers la droite.
+     */
+    public void asyncTournerD(int angle) {
+        pilot.setAngularSpeed(100);
+        pilot.rotate(1.033 * (double) angle, true);
+    }
+
+    /**
+     * Tourne le robot vers la gauche de manière asynchrone d'un certain angle.
+     * Le robot continue son exécution sans être bloqué par cette opération.
+     * 
+     * @param angle L'angle en degrés pour effectuer la rotation vers la gauche.
+     */
+    public void asyncTournerG(int angle) {
+        pilot.setAngularSpeed(100);
+        pilot.rotate(-1.033 * (double) angle, true);
+    }
+
+    /**
+     * Déplace le robot de manière à se décaler vers la droite en tournant, avançant, puis tournant dans l'autre direction.
+     * Effectue une rotation vers la droite, avance de 300 centimètres, puis effectue une rotation vers la gauche.
+     */
+    public void seDecalerD() {
+        tournerD(45);
+        avancer(300, 300);
+        tournerG(47);
+    }
+
+    /**
+     * Déplace le robot de manière à se décaler vers la gauche en tournant, avançant, puis tournant dans l'autre direction.
+     * Effectue une rotation vers la gauche, avance de 300 centimètres, puis effectue une rotation vers la droite.
+     */
+    public void seDecalerG() {
+        tournerG(45);
+        avancer(300, 300);
+        tournerD(47);
+    }
+
+    //--------------------------------------------------Autre----------------------------------------------------
+
+    /**
+     * Définit la vitesse de déplacement linéaire du robot.
+     * 
+     * @param v La vitesse à laquelle le robot doit avancer, exprimée en unités de vitesse linéaire.
+     */
+    public void setVitesse(int v) {
+        pilot.setLinearSpeed(v);
+    }
+
+    /**
+     * Vérifie si le robot est actuellement en mouvement.
+     * 
+     * @return <code>true</code> si le robot est en mouvement, <code>false</code> sinon.
+     */
+    public boolean isMoving() {
+        return pilot.isMoving();
+    }
+}
