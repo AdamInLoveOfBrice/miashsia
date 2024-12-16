@@ -1,0 +1,138 @@
+package capteurs;
+
+import java.util.Arrays;
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.ev3.LocalEV3;
+import lejos.robotics.SampleProvider;
+
+/**
+ * La classe <code>DistanceCapteur</code> permet d'interfacer un capteur à ultrasons EV3
+ * pour mesurer la distance entre le robot et un objet en utilisant des échantillons
+ * de données de distance.
+ * Elle fournit des méthodes pour obtenir la distance mesurée, enregistrer plusieurs mesures,
+ * ainsi que pour ouvrir et fermer le capteur.
+ * 
+ * @author MIASHS Kermit Team
+ */
+public class DistanceCapteur {
+
+    /**
+     * L'instance du capteur à ultrasons EV3.
+     */
+    private EV3UltrasonicSensor capteurDistance;
+
+    /**
+     * Le fournisseur d'échantillons permettant d'obtenir les mesures de distance.
+     */
+    private SampleProvider distanceSampler;
+
+    /**
+     * Le tableau pour stocker les échantillons de distance capturés par le capteur.
+     */
+    private float[] sample;
+
+    /**
+     * Constructeur de la classe <code>DistanceCapteur</code> utilisant le port "S4" du robot EV3.
+     * Initialise le capteur à ultrasons et configure le mode de collecte des échantillons.
+     */
+    public DistanceCapteur () {
+        capteurDistance = new EV3UltrasonicSensor(LocalEV3.get().getPort("S4")); // Initialisation du capteur
+        distanceSampler = capteurDistance.getDistanceMode(); // Mode de collecte des données de distance
+        sample = new float[distanceSampler.sampleSize()]; // Initialisation du tableau d'échantillons
+    }
+
+    /**
+     * Constructeur de la classe <code>DistanceCapteur</code> utilisant un port spécifique.
+     * Initialise le capteur à ultrasons sur le port spécifié et configure le mode de collecte
+     * des échantillons.
+     * 
+     * @param port Le port du robot auquel le capteur à ultrasons est connecté.
+     */
+    public DistanceCapteur (Port port) {
+        capteurDistance = new EV3UltrasonicSensor(port);   // Initialisation du capteur
+        distanceSampler = capteurDistance.getDistanceMode(); // Mode de collecte des données de distance
+        sample = new float[distanceSampler.sampleSize()]; // Initialisation du tableau d'échantillons
+    }
+
+    //-----------------------------------------------Méthodes-------------------------------------------------
+
+    /**
+     * Effectue une collecte de données de distance pendant la rotation du robot.
+     * Cette méthode ajoute la mesure de distance courante dans le tableau fourni.
+     * 
+     * @param tab Le tableau d'échantillons dans lequel la nouvelle distance sera ajoutée.
+     * @return Un tableau avec la nouvelle distance ajoutée à la fin.
+     */
+    public float[] recherche(float[] tab) {
+        tab = Arrays.copyOf(tab, tab.length + 1);  // Agrandir le tableau
+        tab[tab.length - 1] = getDistance();  // Ajouter la distance actuelle au tableau
+        return tab;  // Retourner le tableau mis à jour
+    }
+
+    /**
+     * Retourne la distance actuellement mesurée par le capteur à ultrasons.
+     * Cette méthode met à jour les échantillons en appelant la méthode <code>setSample</code>
+     * et retourne la première valeur du tableau, qui représente la distance en mètres.
+     * 
+     * @return La distance mesurée par le capteur en mètres.
+     */
+    public float getDistance() {
+        setSample();  // Remplir le tableau sample avec les données du capteur
+        return sample[0];  // Retourner la première valeur, qui est la distance mesurée
+    }
+
+    /**
+     * Ferme le capteur à ultrasons et libère les ressources associées.
+     * Cette méthode éteint le capteur, le rendant inutilisable jusqu'à sa réactivation.
+     */
+    public void fermer() {
+        capteurDistance.close();  // Fermeture du capteur
+    }
+
+    /**
+     * Ouvre le capteur à ultrasons, activant sa fonctionnalité.
+     * Cette méthode rend le capteur opérationnel après une fermeture.
+     */
+    public void ouvrir() {
+        capteurDistance.enable();  // Activation du capteur
+    }
+
+    //-----------------------------------------------Getters and setters-------------------------------------------------
+
+    /**
+     * Remplit le tableau <code>sample</code> avec les données actuelles du capteur à ultrasons.
+     * Cette méthode récupère un échantillon de distance et le place dans le tableau <code>sample</code>.
+     */
+    public void setSample() {
+        distanceSampler.fetchSample(sample, 0);  // Récupération d'un échantillon de distance
+    }
+
+    /**
+     * Retourne le tableau d'échantillons de distance capturés par le capteur.
+     * 
+     * @return Le tableau d'échantillons.
+     */
+    public float[] getSample() {
+        return sample;  // Retourner le tableau d'échantillons
+    }
+
+    /**
+     * Retourne l'instance du capteur à ultrasons.
+     * 
+     * @return L'instance du capteur à ultrasons.
+     */
+    public EV3UltrasonicSensor getCapteurDistance() {
+        return capteurDistance;  // Retourner le capteur
+    }
+
+    /**
+     * Retourne le fournisseur d'échantillons permettant d'obtenir les mesures de distance.
+     * 
+     * @return Le fournisseur d'échantillons du capteur.
+     */
+    public SampleProvider getDistanceSampler() {
+        return distanceSampler;  // Retourner le fournisseur d'échantillons
+    }
+
+}
