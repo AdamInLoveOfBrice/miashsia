@@ -1,0 +1,47 @@
+package capteurs;
+
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3TouchSensor;
+
+/**
+ * La classe <code>ToucherCapteur</code> est une extension de la classe <code>EV3TouchSensor</code>,
+ * qui permet d'utiliser un capteur de contact sur le robot EV3 pour détecter si un objet
+ * touche le capteur ou non.
+ * 
+ * Cette classe expose une méthode <code>estTouche</code> qui permet de savoir si le capteur
+ * a été activé par un contact physique.
+ * 
+ * @author MIASHS Kermit Team
+ */
+public class ToucherCapteur extends EV3TouchSensor {
+
+    /**
+     * Constructeur de la classe <code>ToucherCapteur</code> qui initialise le capteur de contact
+     * sur le port spécifié du robot EV3.
+     * 
+     * @param port Le port auquel le capteur de contact est connecté.
+     */
+    public ToucherCapteur(Port port) {
+        super(port); // Appel du constructeur de la classe parente EV3TouchSensor
+    }
+
+    /**
+     * Vérifie si le capteur de contact est actuellement touché.
+     * Cette méthode récupère un échantillon du capteur et renvoie <code>true</code> si le capteur
+     * détecte un contact, sinon elle renvoie <code>false</code>.
+     * 
+     * @return <code>true</code> si le capteur est touché, <code>false</code> sinon.
+     */
+    public boolean estTouche() {
+        float[] sample = new float[1]; // Tableau pour stocker l'échantillon du capteur
+        fetchSample(sample, 0); // Récupère l'échantillon du capteur
+
+        // Si la valeur de l'échantillon est 0, cela signifie que le capteur n'est pas touché
+        // Sinon, cela signifie que le capteur est activé par un contact
+        if (sample[0] == 0) {
+            return false; // Pas de contact
+        } else {
+            return true; // Contact détecté
+        }
+    }
+}
