@@ -1,6 +1,11 @@
 Voici un guide succin pour savoir comment sont organisés les documents demandés :
 
-Un premier dossier "Documents
+
+Un premier dossier "javadoc" contient la documentation interne du code sous la forme javadoc et contient plusieurs sous dossiers :
+  I. Un document "Lien" où le lien du javadoc peut-être trouvé.
+  II. Un dossier "code javadoc" où le code est commenté pour exportation javadoc.
+  III. Un dossier "code html"
+Un premier dossier "DocumentsàRendre" contient l'ensemble
 Version1: Les documents placés dans le dossier “Version1” ne sont là que pour servir de comparaison aux documents finaux et montrer la progression du groupe.
   I. Cahier des charges
   II. Process
